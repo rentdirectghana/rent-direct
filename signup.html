@@ -25,6 +25,7 @@
         .auth-footer-navigator a { color: var(--gold-primary); text-decoration: none; }
         @media (max-width: 576px) { .form-dual-row { grid-template-columns: 1fr; } }
     </style>
+    <!-- Streamlined lightning fast minified Supabase assembly engine library -->
     <script src="https://jsdelivr.net"></script>
 </head>
 <body>
@@ -70,23 +71,47 @@
             var email = document.getElementById('reg-email').value.trim();
             var password = document.getElementById('reg-password').value;
 
-            fb.style.display = "block"; fb.style.background = "rgba(212, 175, 55, 0.1)"; fb.style.color = "var(--gold-primary)"; fb.innerText = "Creating account secure tokens...";
+            fb.style.display = "block"; 
+            fb.style.background = "rgba(212, 175, 55, 0.1)"; 
+            fb.style.color = "var(--gold-primary)"; 
+            fb.innerText = "Processing secure account creation...";
 
             try {
-                var signupResult = await client.auth.signUp({ email: email, password: password });
+                // 🛡️ BULLETPROOF: Save user information directly into their cloud auth profile metadata context
+                var signupResult = await client.auth.signUp({ 
+                    email: email, 
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: fName + " " + lName,
+                            phone_number: phone,
+                            role: 'tenant'
+                        }
+                    }
+                });
+
                 if (signupResult.error) {
-                    fb.style.background = "rgba(239, 68, 68, 0.1)"; fb.style.color = "var(--danger)"; fb.innerText = signupResult.error.message; return;
+                    fb.style.background = "rgba(239, 68, 68, 0.1)"; fb.style.color = "var(--danger)"; 
+                    fb.innerText = "Registration Alert: " + signupResult.error.message; return;
                 }
+
                 if (signupResult.data.user) {
                     localStorage.setItem("trd_user_id", signupResult.data.user.id);
-                    await client.from('users').insert([{ id: signupResult.data.user.id, full_name: fName + " " + lName, email: email, phone_number: phone, role: 'tenant', has_premium_access: false }]);
-                    fb.style.background = "rgba(16, 185, 129, 0.1)"; fb.style.color = "var(--success)"; fb.innerText = "Success! Account verified. Redirecting to showroom...";
-                    setTimeout(function() { window.location.href = "properties.html"; }, 1500);
+                    fb.style.background = "rgba(16, 185, 129, 0.1)"; fb.style.color = "var(--success)"; 
+                    fb.innerText = "Welcome " + fName + "! Verification clear. Routing to showroom feed...";
+                    
+                    setTimeout(function() { 
+                        window.location.href = "properties.html"; 
+                    }, 1200);
                 }
-            } catch (err) { fb.style.background = "rgba(239, 68, 68, 0.1)"; fb.style.color = "var(--danger)"; fb.innerText = "Database sync delay. Click Create Account once more."; }
+            } catch (err) { 
+                fb.style.background = "rgba(239, 68, 68, 0.1)"; fb.style.color = "var(--danger)";
+                fb.innerText = "Network timeout. Please try clicking Create Account again."; 
+            }
         }
     </script>
 </body>
 </html>
+
 
 
