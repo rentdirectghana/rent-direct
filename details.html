@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Property Details | Therent Direct Ghana</title>
-    <!-- Connect to the core luxury stylesheet variables -->
     <link rel="stylesheet" href="styles.css">
     <style>
         .details-container { max-width: 1250px; margin: 3rem auto; padding: 0 2rem; }
@@ -22,166 +21,87 @@
         .price-tag-value span { font-size: 0.9rem; color: var(--text-muted); font-weight: 400; }
         .calendar-field-group { text-align: left; margin-bottom: 1.5rem; }
         .calendar-label { font-size: 0.75rem; text-transform: uppercase; color: var(--gold-primary); display: block; margin-bottom: 0.5rem; font-weight: 500; }
-        
-        /* Unlocked Card Properties */
-        .unlocked-landlord-card {
-            background: rgba(16, 185, 129, 0.05);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            text-align: left;
-        }
-
-        /* Flat Color Helpers to completely satisfy local linters */
-        .premium-wa-banner {
-            background: #25D366; 
-            color: #FFFFFF; 
-            text-decoration: none; 
-            padding: 0.9rem 1.75rem; 
-            border-radius: 8px; 
-            font-weight: 600; 
-            font-size: 0.85rem; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 0.75rem; 
-            width: 100%; 
-            max-width: 280px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .premium-tt-banner {
-            background: #000000; 
-            color: #FFFFFF; 
-            text-decoration: none; 
-            padding: 0.9rem 1.75rem; 
-            border-radius: 8px; 
-            font-weight: 600; 
-            font-size: 0.85rem; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 0.75rem; 
-            width: 100%; 
-            max-width: 280px; 
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-
+        .unlocked-landlord-card { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; text-align: left; }
+        .premium-wa-banner { background: #25D366; color: #FFFFFF; text-decoration: none; padding: 0.9rem 1.75rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.75rem; width: 100%; max-width: 280px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .premium-tt-banner { background: #000000; color: #FFFFFF; text-decoration: none; padding: 0.9rem 1.75rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.75rem; width: 100%; max-width: 280px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
         @media (max-width: 992px) { .details-grid { grid-template-columns: 1fr; gap: 2rem; } .media-box { height: 300px; } }
     </style>
-    <!-- Connect to external library scripts -->
     <script src="https://jsdelivr.net"></script>
-    <script src="supabase.js"></script>
 </head>
 <body>
-
     <nav class="lux-navbar">
         <a href="properties.html" class="lux-logo">Therent Direct <span>Ghana</span></a>
-        <div class="nav-links">
-            <a href="properties.html">Properties</a>
-            <a href="dashboard.html">My Dashboard</a>
-            <a href="payment.html" style="color: var(--gold-primary);">Unlock Landlord Contacts</a>
-            <a href="#" onclick="executeLogout(event)" style="opacity: 0.6; margin-left: 2.5rem;">Sign Out</a>
-        </div>
+        <div class="nav-links"><a href="properties.html">Properties</a><a href="dashboard.html">My Dashboard</a><a href="payment.html" style="color: var(--gold-primary);">Unlock Landlord Contacts</a></div>
     </nav>
-
     <div class="details-container">
         <div class="details-grid">
-            
             <main class="view-window">
-                <div class="media-box" id="media-showcase-viewport">
-                    <div style="padding: 4rem; text-align: center; color: var(--text-muted);">Pulling architectural overview files...</div>
-                </div>
+                <div class="media-box" id="media-showcase-viewport"><div style="padding: 4rem; text-align: center; color: var(--text-muted);">Loading media asset layers...</div></div>
                 <h1 class="show-title" id="p-title">---</h1>
                 <div class="show-location" id="p-location">📍 ---</div>
-                <div class="show-specs">
-                    <div id="p-beds">🛌 <span>0</span> Bed</div>
-                    <div id="p-baths">🛀 <span>0</span> Bath</div>
-                </div>
+                <div class="show-specs"><div id="p-beds">🛌 <span>0</span> Bed</div><div id="p-baths">🛀 <span>0</span> Bath</div></div>
                 <p class="show-description" id="p-desc">---</p>
             </main>
-
             <aside class="monetization-box">
                 <div class="price-tag-value" id="p-price">GH₵0<span> / mo</span></div>
-                
-                <div class="calendar-field-group">
-                    <label class="calendar-label">Choose Walkthrough Inspection Date</label>
-                    <input type="date" id="inspection-calendar-input" class="luxury-input">
-                </div>
-
-                <div id="action-button-placeholder">
-                    <div style="font-size:0.85rem; color:var(--text-muted);">Verifying profile tokens...</div>
-                </div>
+                <div class="calendar-field-group"><label class="calendar-label">Choose Walkthrough Inspection Date</label><input type="date" id="inspection-calendar-input" class="luxury-input"></div>
+                <div id="action-button-placeholder"><div style="font-size:0.85rem; color:var(--text-muted);">Verifying profile tokens...</div></div>
             </aside>
-
         </div>
     </div>
-
-    <!-- Editorial Customer Support Footer Component -->
     <footer style="background: #111827; border-top: 1px solid var(--border-luxury); padding: 5rem 2rem 3rem 2rem; margin-top: 6rem; position: relative;">
         <div style="max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr 1.2fr; gap: 4rem; align-items: start;">
-            <div>
-                <h3 style="color: var(--text-pure); font-size: 1.6rem; margin-bottom: 1rem; font-family: 'Cormorant Garamond', serif; font-weight: 600;">Therent Direct Ghana</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.7; max-width: 320px;">Connecting home seekers directly with property owners across Ghana. Connect directly with landlords. No agent fees/commissions, No stress. Rent Direct.</p>
-            </div>
-            <div>
-                <h4 style="color: var(--gold-primary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.5rem; font-weight: 600;">Executive Support</h4>
-                <div style="font-size: 0.95rem; display: flex; flex-direction: column; gap: 1.25rem;">
-                    <div>
-                        <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; display: block; margin-bottom: 0.25rem;">Direct Support Line</span>
-                        <a href="tel:0541456133" style="color: var(--text-pure); text-decoration: none; font-weight: 600; font-family: monospace; letter-spacing: 0.05em;">054-145-6133</a>
-                    </div>
-                    <div>
-                        <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; display: block; margin-bottom: 0.25rem;">Official Email Channel</span>
-                        <a href="mailto:rentdirect25@outlook.com" style="color: var(--text-pure); text-decoration: none; font-weight: 500;">rentdirect25@outlook.com</a>
-                    </div>
-                </div>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 1.25rem; align-items: flex-start;">
-                <h4 style="color: var(--gold-primary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.25rem; font-weight: 600;">Instant Verification Channels</h4>
-                <a href="https://wa.me" target="_blank" class="premium-wa-banner">Chat on WhatsApp Desk</a>
-                <a href="https://tiktok.com" target="_blank" class="premium-tt-banner">Follow us @rentdirect</a>
-            </div>
-        </div>
-        <div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid rgba(255, 255, 255, 0.03); max-width: 1300px; margin: 4rem auto 0 auto; padding-top: 2rem; letter-spacing: 0.02em;">
-            &copy; 2026 Therent Direct Ghana. All Rights Reserved. Connect directly with landlords. No agent fees/commissions.
+            <div><h3 style="color: var(--text-pure); font-size: 1.6rem; margin-bottom: 1rem; font-family: 'Cormorant Garamond', serif;">Therent Direct Ghana</h3><p style="color: var(--text-muted); font-size: 0.85rem;">Connecting home seekers directly with property owners across Ghana.</p></div>
+            <div><h4 style="color: var(--gold-primary); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 1.5rem;">Executive Support</h4><div style="font-size: 0.95rem; display: flex; flex-direction: column; gap: 1.25rem;"><a href="tel:0541456133" style="color: var(--text-pure); text-decoration: none;">054-145-6133</a><a href="mailto:rentdirect25@outlook.com" style="color: var(--text-pure); text-decoration: none;">rentdirect25@outlook.com</a></div></div>
+            <div style="display: flex; flex-direction: column; gap: 1.25rem;"><a href="https://wa.me" target="_blank" class="premium-wa-banner">Chat on WhatsApp Desk</a><a href="https://tiktok.com" target="_blank" class="premium-tt-banner">Follow us @rentdirect</a></div>
         </div>
     </footer>
-
     <script>
-        var targetedPropertyId = null;
-        var activeTenantUser = null;
+        var client = supabase.createClient("https://supabase.co", "sb_publishable_9ezOuadFGRZfHWCChMhVUA_huKgJSr-");
+        var targetedPropertyId = new URLSearchParams(window.location.search).get("id");
+        var activeUserId = localStorage.getItem("trd_user_id");
         var globalPropertyData = null;
 
-        document.addEventListener("DOMContentLoaded", function() {
-            setTimeout(initializePageWorkflowSession, 400);
+        document.addEventListener("DOMContentLoaded", async function() {
+            if (!targetedPropertyId) { window.location.href = "properties.html"; return; }
+            await loadIndividualPropertyDetails();
         });
 
-        async function initializePageWorkflowSession() {
-            var user = await checkUserSession();
-            if (!user) return;
-            activeTenantUser = user;
+        async function loadIndividualPropertyDetails() {
+            try {
+                var propertyQuery = await client.from("properties").select("*").eq("id", targetedPropertyId).single();
+                if (propertyQuery.error) return;
+                globalPropertyData = propertyQuery.data;
 
-            var urlParams = new URLSearchParams(window.location.search);
-            targetedPropertyId = urlParams.get("id");
+                document.getElementById("p-title").innerText = globalPropertyData.title;
+                document.getElementById("p-location").innerText = "📍 " + globalPropertyData.location;
+                document.getElementById("p-beds").querySelector("span").innerText = globalPropertyData.bedrooms;
+                document.getElementById("p-baths").querySelector("span").innerText = globalPropertyData.bathrooms;
+                document.getElementById("p-desc").innerText = globalPropertyData.description;
+                document.getElementById("p-price").innerHTML = "GH₵" + Number(globalPropertyData.price_ghs).toLocaleString() + "<span> / mo</span>";
 
-            if (!targetedPropertyId) {
-                window.location.href = "properties.html";
-                return;
-            }
+                var mediaContainer = document.getElementById("media-showcase-viewport");
+                if (globalPropertyData.video_url) { mediaContainer.innerHTML = '<video src="' + globalPropertyData.video_url + '" controls autoplay muted loop></video>'; } 
+                else { mediaContainer.innerHTML = '<img src="' + globalPropertyData.image_url + '" alt="Showcase">'; }
 
-            await loadIndividualPropertyDetails();
+                var placeholder = document.getElementById("action-button-placeholder");
+                placeholder.innerHTML = "";
+
+                if (activeUserId) {
+                    var profileQuery = await client.from("users").select("*").eq("id", activeUserId).single();
+                    var profile = profileQuery.data;
+
+                    if (profile && profile.has_premium_access === true) {
+                        var confirmBtn = document.createElement("button"); confirmBtn.className = "btn-luxury"; confirmBtn.style.width = "100%"; confirmBtn.innerText = "Confirm Inspection Booking"; confirmBtn.addEventListener("click", confirmBookingPass);
+                        var contactCard = document.createElement("div"); contactCard.className = "unlocked-landlord-card"; contactCard.innerHTML = '<span style="font-size:0.75rem; text-transform:uppercase; color:var(--gold-primary); display:block; margin-bottom:0.25rem;">Direct Owner Phone Line</span><a href="tel:' + globalPropertyData.landlord_phone + '" style="font-size:1.4rem; color:var(--text-pure); text-decoration:none; font-family:monospace; font-weight:700;">' + globalPropertyData.landlord_phone + '</a>';
+                        placeholder.appendChild(confirmBtn); placeholder.appendChild(contactCard);
+                    } else {
+                        var paywallLink = document.createElement("a"); paywallLink.href = "payment.html"; paywallLink.className = "btn-luxury"; paywallLink.style.display = "block"; paywallLink.style.marginTop = "1rem"; paywallLink.innerText = "Pay GH₵200 to Schedule Inspection";
+                        placeholder.appendChild(paywallLink);
+                    }
+                } else {
+                    placeholder.innerHTML = '<a href="login.html" class="btn-luxury" style="display:block;">Sign In to Book Inspection</a>';
+                }
+            } catch (err) { console.error(err); }
         }
 
-        async function loadIndividualPropertyDetails() {
-            var client = getSupabaseInstance();
-            if (!client) return;
-
-            try {
-                var propertyQuery = await client
-                    .from("properties")
-                    .select("*")
-                    .eq("id", targetedPropertyId)
-                    .single();
-
-                if (propertyQuery.error || !propertyQuery.data) {
