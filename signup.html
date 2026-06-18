@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join | Therent Direct Ghana</title>
-    <!-- Hardware Browser Speed Cache-Control Vector Injection -->
     <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
     <link rel="stylesheet" href="styles.css">
     <style>
@@ -25,7 +24,6 @@
         .auth-footer-navigator a { color: var(--gold-primary); text-decoration: none; }
         @media (max-width: 576px) { .form-dual-row { grid-template-columns: 1fr; } }
     </style>
-    <!-- Streamlined lightning fast minified Supabase assembly engine library -->
     <script src="https://jsdelivr.net"></script>
 </head>
 <body>
@@ -74,44 +72,50 @@
             fb.style.display = "block"; 
             fb.style.background = "rgba(212, 175, 55, 0.1)"; 
             fb.style.color = "var(--gold-primary)"; 
-            fb.innerText = "Processing secure account creation...";
+            fb.innerText = "Connecting securely...";
 
-            try {
-                // 🛡️ BULLETPROOF: Save user information directly into their cloud auth profile metadata context
-                var signupResult = await client.auth.signUp({ 
-                    email: email, 
-                    password: password,
-                    options: {
-                        data: {
-                            full_name: fName + " " + lName,
-                            phone_number: phone,
-                            role: 'tenant'
-                        }
-                    }
-                });
+            // 🔥 STAGE 1: AUTOMATED RETRY SYSTEM BASS PASS GATEWAY
+            var signupResult = null;
+            var attempts = 0;
+            var maxAttempts = 3;
 
-                if (signupResult.error) {
-                    fb.style.background = "rgba(239, 68, 68, 0.1)"; fb.style.color = "var(--danger)"; 
-                    fb.innerText = "Registration Alert: " + signupResult.error.message; return;
-                }
-
-                if (signupResult.data.user) {
-                    localStorage.setItem("trd_user_id", signupResult.data.user.id);
-                    fb.style.background = "rgba(16, 185, 129, 0.1)"; fb.style.color = "var(--success)"; 
-                    fb.innerText = "Welcome " + fName + "! Verification clear. Routing to showroom feed...";
+            while (attempts < maxAttempts) {
+                try {
+                    signupResult = await client.auth.signUp({ 
+                        email: email, 
+                        password: password,
+                        options: { data: { full_name: fName + " " + lName, phone_number: phone, role: 'tenant' } }
+                    });
                     
-                    setTimeout(function() { 
-                        window.location.href = "properties.html"; 
-                    }, 1200);
+                    if (signupResult) break; // Connected successfully!
+                } catch (e) {
+                    attempts++;
+                    fb.innerText = "Network busy, optimizing connection (Attempt " + attempts + ")...";
+                    await new Promise(r => setTimeout(r, 1000)); // Wait 1 second before retrying
                 }
-            } catch (err) { 
-                fb.style.background = "rgba(239, 68, 68, 0.1)"; fb.style.color = "var(--danger)";
-                fb.innerText = "Network timeout. Please try clicking Create Account again."; 
+            }
+
+            // Fallback fail check
+            if (!signupResult || signupResult.error) {
+                fb.style.background = "rgba(239, 68, 68, 0.1)"; fb.style.color = "var(--danger)"; 
+                fb.innerText = signupResult ? signupResult.error.message : "Connection unstable. Please try clicking once more.";
+                return;
+            }
+
+            if (signupResult.data.user) {
+                localStorage.setItem("trd_user_id", signupResult.data.user.id);
+                fb.style.background = "rgba(16, 185, 129, 0.1)"; fb.style.color = "var(--success)"; 
+                fb.innerText = "Welcome " + fName + "! Account verified. Opening showroom...";
+                
+                setTimeout(function() { 
+                    window.location.href = "properties.html"; 
+                }, 1000);
             }
         }
     </script>
 </body>
 </html>
+
 
 
 
