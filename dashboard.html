@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant Dashboard | Therent Direct Ghana</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .dash-container { max-width: 1250px; margin: 3rem auto; padding: 0 2rem; }
+        .dash-layout { display: grid; grid-template-columns: 1fr 2.5fr; gap: 3.5rem; align-items: start; }
+        .profile-sidebar { background: var(--bg-surface); border: 1px solid var(--border-luxury); border-radius: 16px; padding: 2.5rem; text-align: center; }
+        .user-avatar { width: 70px; height: 70px; background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--gold-primary); margin: 0 auto 1.5rem auto; }
+        .user-name { font-size: 1.6rem; color: var(--text-pure); margin-bottom: 0.25rem; }
+        .user-email { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; display: block; }
+        .token-timer-box { background: rgba(9, 13, 22, 0.6); border: 1px solid rgba(255,255,255,0.03); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; }
+        .timer-status-header { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .countdown-digits { font-size: 1.4rem; font-weight: 600; color: var(--gold-primary); font-family: monospace; }
+        .countdown-digits.expired { color: var(--danger); }
+        .main-workspace { background: var(--bg-surface); border: 1px solid var(--border-luxury); border-radius: 16px; padding: 3rem; }
+        .workspace-heading { font-size: 2.2rem; color: var(--text-pure); margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
+        .inspection-card { background: rgba(9, 13, 22, 0.4); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 1.5rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .house-title { font-size: 1.2rem; color: var(--text-pure); font-weight: 600; margin-bottom: 0.25rem; }
+        .house-details { font-size: 0.85rem; color: var(--text-muted); display: flex; gap: 1rem; }
+        .house-details span { color: var(--gold-primary); }
+        .schedule-badge { background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500; text-transform: uppercase; }
+        .fallback-empty-msg { text-align: center; color: var(--text-muted); font-style: italic; padding: 4rem 0; }
+        @media (max-width: 992px) { .dash-layout { grid-template-columns: 1fr; gap: 2.5rem; } .dash-container { padding: 1rem; } }
+    </style>
+    <script src="https://jsdelivr.net"></script>
+    <script src="supabase.js"></script>
+</head>
+<body>
+
+    <nav class="lux-navbar">
+        <a href="properties.html" class="lux-logo">Therent Direct <span>Ghana</span></a>
+        <div class="nav-links">
+            <a href="properties.html">Properties</a>
+            <a href="dashboard.html" style="color: var(--gold-primary);">My Dashboard</a>
+            <a href="payment.html">Unlock Landlord Contacts</a>
+            <a href="#" onclick="executeLogout(event)" style="opacity: 0.6; margin-left: 2.5rem;">Sign Out</a>
+        </div>
+    </nav>
+
+    <template id="inspection-row-template">
+        <div class="inspection-card">
+            <div>
+                <h3 class="house-title data-title">Title</h3>
+                <div class="house-details">
+                    <span class="data-location">Location</span>
+                    <span class="data-price">Price</span>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <div class="schedule-badge data-status">Status</div>
+                <div class="data-date" style="font-size: 0.8rem; color: var(--text-platinum); margin-top: 0.5rem; font-weight: 500;">Date</div>
+            </div>
+        </div>
+    </template>
+
+    <div class="dash-container">
+        <div class="dash-layout">
+            <aside class="profile-sidebar">
+                <div class="user-avatar">👤</div>
+                <h2 id="u-profile-name" class="user-name">---</h2>
+                <span id="u-profile-email" class="user-email">---</span>
+                <div class="token-timer-box">
+                    <div class="timer-status-header">Premium Access Lifecycle</div>
+                    <div id="countdown-timer-display" class="countdown-digits">Checking permissions...</div>
+                </div>
+                <a href="properties.html" class="btn-luxury" style="width: 100%; margin-top: 2rem; padding: 0.75rem 1rem; font-size: 0.75rem;">Browse Properties</a>
+            </aside>
+            <main class="main-workspace">
+                <h1 class="workspace-heading">My Scheduled Inspections</h1>
+                <div id="inspections-list-wrapper">
+                    <div class="fallback-empty-msg">Querying database logs...</div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        var tenantUserId = null;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(async function() {
+                var user = await checkUserSession();
+                if (!user) return;
+                tenantUserId = user.id;
+                await initializeTenantProfileDashboard();
+            }, 400);
+        });
+
+        async function initializeTenantProfileDashboard() {
+            var client = getSupabaseInstance();
+            if (!client) return;
+
+            try {
+                var profile = await fetchUserProfile(tenantUserId);
+                if (profile) {
+                    document.getElementById("u-profile-name").innerText = profile.full_name;
+                    document.getElementById("u-profile-email").innerText = profile.email;
+                    calculateRemainingPremiumTimeline(profile);
+                }
+
+                var queryResult = await client.from("inspections").select("*").eq("tenant_id", tenantUserId).order("preferred_date", { ascending: true });
+                var bookings = queryResult.data;
+                var error = queryResult.error;
+                var listWrapper = document.getElementById("inspections-list-wrapper");
+
+                if (error || !bookings || bookings.length === 0) {
+                    listWrapper.innerHTML = "<div class='fallback-empty-msg'>You have not scheduled any direct residential inspections yet. Click view details on a property card to choose a date.</div>";
+                    return;
+                }
+
+                listWrapper.innerHTML = "";
+                var templateNode = document.getElementById("inspection-row-template");
+                
+                for (var i = 0; i < bookings.length; i++) {
+                    var booking = bookings[i];
+                    var propertyFetch = await client.from("properties").select("title, location, price_ghs").eq("id", booking.property_id).single();
+                    var prop = propertyFetch.data;
+                    if (!prop) continue;
+
+                    var rawDate = new Date(booking.preferred_date);
+                    var formattedDate = rawDate.toLocaleDateString("en-GH", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+                    var priceString = Number(prop.price_ghs).toLocaleString();
+                    var templateClone = document.importNode(templateNode.content, true);
+
+                    templateClone.querySelector(".data-title").innerText = prop.title;
+                    templateClone.querySelector(".data-location").innerText = "📍 " + prop.location;
+                    templateClone.querySelector(".data-price").innerText = "GH₵" + priceString + "/mo";
+                    templateClone.querySelector(".data-status").innerText = booking.status;
+                    templateClone.querySelector(".data-date").innerText = "📅 " + formattedDate;
+
+                    listWrapper.appendChild(templateClone);
+                }
+            } catch (fault) { console.error(fault); }
+        }
+
+        function calculateRemainingPremiumTimeline(profile) {
+            var timerDisplay = document.getElementById("countdown-timer-display");
+            if (!profile.has_premium_access || !profile.premium_until) { timerDisplay.innerText = "🔒 Access Locked"; timerDisplay.className = "countdown-digits expired"; return; }
+            var expiryTime = new Date(profile.premium_until).getTime();
+            var timerTickInterval = setInterval(function() {
+                var totalDifference = expiryTime - new Date().getTime();
+                if (totalDifference <= 0) { clearInterval(timerTickInterval); timerDisplay.innerText = "🚨 Expired"; timerDisplay.className = "countdown-digits expired"; return; }
+                var calculationDays = Math.floor(totalDifference / 86400000);
+                var calculationHours = Math.floor((totalDifference % 86400000) / 3600000);
+                var calculationMinutes = Math.floor((totalDifference % 3600000) / 60000);
+                timerDisplay.innerText = calculationDays + "d : " + calculationHours + "h : " + calculationMinutes + "m Left";
+            }, 1000);
+        }
+
+        async function executeLogout(event) { event.preventDefault(); var client = getSupabaseInstance(); if (client) await client.auth.signOut(); window.location.href = "login.html"; }
+    </script>
+</body>
+</html>

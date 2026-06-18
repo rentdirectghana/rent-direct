@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Verification Access | Therent Direct Ghana</title>
+    <!-- Connect to the core luxury stylesheet variables -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .payment-wrapper {
+            min-height: calc(100vh - 90px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            background: radial-gradient(circle at center, rgba(18, 25, 38, 0.4) 0%, rgba(9, 13, 22, 1) 100%);
+        }
+        .payment-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-luxury);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 520px;
+            padding: 4rem 3.5rem;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+        .pay-subtitle {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--gold-primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .pay-title { font-size: 2.8rem; color: var(--text-pure); margin-bottom: 1rem; }
+        .pay-price { font-size: 3rem; font-weight: 700; color: var(--text-pure); margin: 1.5rem 0; }
+        .pay-price span { font-size: 1rem; color: var(--text-muted); font-weight: 300; }
+        .pay-description { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 2.5rem; }
+        
+        /* Mobile Money Logos Styling Layout */
+        .momo-network-ribbon {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .network-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .network-pill.mtn { color: #FFCC00; border-color: rgba(255, 204, 0, 0.2); }
+        .network-pill.telecel { color: #FF0000; border-color: rgba(255, 0, 0, 0.2); }
+        .network-pill.at { color: #00A651; border-color: rgba(0, 166, 81, 0.2); }
+
+        .feedback-box {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            padding: 1rem;
+            border-radius: 6px;
+            display: none;
+            text-align: center;
+            line-height: 1.4;
+        }
+    </style>
+    <!-- Fixed central external library linkages -->
+    <script src="https://jsdelivr.net"></script>
+    <script src="supabase.js"></script>
+</head>
+<body>
+
+    <!-- Global Navigation Header Bar with Updated Wording Maps -->
+    <nav class="lux-navbar">
+        <a href="properties.html" class="lux-logo">Therent Direct <span>Ghana</span></a>
+        <div class="nav-links">
+            <a href="properties.html">Properties</a>
+            <a href="dashboard.html">My Dashboard</a>
+            <a href="payment.html" style="color: var(--gold-primary);">Unlock Landlord Contacts</a>
+            <a href="#" onclick="executeLogout(event)" style="opacity: 0.6; margin-left: 2.5rem;">Sign Out</a>
+        </div>
+    </nav>
+
+    <div class="payment-wrapper">
+        <div class="payment-card">
+            <span class="pay-subtitle">Secure Gateway Portal</span>
+            <h1 class="pay-title">Instant Unlock</h1>
+            
+            <!-- 🔥 Visual card fee components updated to 200 GHs -->
+            <div class="pay-price">GH₵200<span> / 30 Days Pass</span></div>
+            
+            <p class="pay-description">
+                Unlock direct landlord numbers and schedule property walkthrough inspections instantly. Our checkout partner (Hubtel) processes all major Ghanaian mobile money networks securely.
+            </p>
+
+            <div class="momo-network-ribbon">
+                <div class="network-pill mtn">MTN MoMo</div>
+                <div class="network-pill telecel">Telecel Cash</div>
+                <div class="network-pill at">AT Money</div>
+            </div>
+
+            <!-- Optimized Checkout Activation Component -->
+            <form id="automated-payment-form" onsubmit="initializeHubtelPaymentWorkflow(event)">
+                <div class="form-group" style="margin-bottom: 2rem; text-align: left;">
+                    <label class="form-label" style="display:block; font-size:0.75rem; color:var(--gold-primary); text-transform:uppercase; margin-bottom:0.5rem; font-weight:500;">Your Mobile Money Phone Number</label>
+                    <input type="tel" id="pay-phone" class="luxury-input" placeholder="e.g. 0244736657" minlength="10" maxlength="10" required>
+                </div>
+
+                <button type="submit" class="btn-luxury" style="width: 100%;">Proceed to Secure Checkout</button>
+                <div id="payment-feedback" class="feedback-box"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script Processing Logic Engine Loops -->
+    <script>
+        let currentUserSessionDetails = null;
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            setTimeout(async () => {
+                currentUserSessionDetails = await checkUserSession();
+            }, 400);
+        });
+
+        async function initializeHubtelPaymentWorkflow(event) {
+            event.preventDefault();
+            const client = getSupabaseInstance();
+            const feedback = document.getElementById('payment-feedback');
+            const mobileNumber = document.getElementById('pay-phone').value;
+
+            if (!client || !currentUserSessionDetails) {
+                alert("Session layer processing credentials. Please try again shortly.");
+                return;
+            }
+
+            feedback.style.display = "block";
+            feedback.style.background = "rgba(212, 175, 55, 0.1)";
+            feedback.style.color = "var(--gold-primary)";
+            feedback.innerText = "Generating transactional reference token lines...";
+
+            // Clean tracking reference generation parameters
+            const clientRef = "TRD-" + Date.now().toString().slice(-6);
+
+            try {
+                // 🔥 Updated SQL database accounting insertion fee row entries to 200.00
+                const { error: dbError } = await client
+                    .from('payments')
+                    .insert([
+                        {
+                            user_id: currentUserSessionDetails.id,
+                            amount: 200.00,
+                            ussd_transaction_proof: "Hubtel Mobile Money Checkout Request: " + mobileNumber + " [Ref: " + clientRef + "]",
+                            status: 'pending'
+                        }
+                    ]);
+
+                if (dbError) {
+                    feedback.style.background = "rgba(239, 68, 68, 0.1)";
+                    feedback.style.color = "var(--danger)";
+                    feedback.innerText = "Database Sync Error: " + dbError.message;
+                    return;
+                }
+
+                feedback.style.background = "rgba(16, 185, 129, 0.1)";
+                feedback.style.color = "var(--success)";
+                feedback.innerHTML = "Reference initialized successfully! Launching secure processing screen...";
+
+                // 🔥 Dynamic hosted setup link window instantly configured to bill exactly 200.00
+                setTimeout(() => {
+                    const merchantId = "yJ2X1Kn";
+                    const paymentAmount = "200.00";
+                    const description = encodeURIComponent("Therent Direct Ghana Premium Access Fee");
+                    const siteReturnUrl = encodeURIComponent(window.location.origin + "/properties.html");
+
+                    window.location.href = "https://hubtel.com" + merchantId + "?amount=" + paymentAmount + "&description=" + description + "&clientReference=" + clientRef + "&returnUrl=" + siteReturnUrl;
+                }, 1500);
+
+            } catch (fault) {
+                console.error("Payment pipeline exception caught:", fault);
+                feedback.style.background = "rgba(239, 68, 68, 0.1)";
+                feedback.style.color = "var(--danger)";
+                feedback.innerText = "Transmission failure. Confirm data connection properties and try again.";
+            }
+        }
+
+        async function executeLogout(event) {
+            event.preventDefault();
+            const client = getSupabaseInstance();
+            if (client) await client.auth.signOut();
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>
+
+

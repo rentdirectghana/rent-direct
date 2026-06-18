@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | Therent Direct Ghana</title>
+    <!-- Connect to the core luxury stylesheet variables -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Luxury Cinematic Wrapper Layout */
+        .auth-viewport { 
+            min-height: calc(100vh - 90px); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 3rem 1.5rem; 
+            background: radial-gradient(circle at 90% 10%, #111827 0%, var(--bg-deep) 80%); 
+            position: relative; 
+            overflow: hidden; 
+        }
+        .premium-auth-card { 
+            background: rgba(18, 25, 38, 0.65); 
+            border: 1px solid var(--border-luxury); 
+            border-radius: 20px; 
+            width: 100%; 
+            max-width: 460px; 
+            padding: 4rem 3.5rem; 
+            backdrop-filter: blur(16px); 
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7); 
+        }
+        .auth-editorial-header { text-align: center; margin-bottom: 3rem; }
+        .auth-editorial-subtitle { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gold-primary); font-weight: 500; margin-bottom: 0.5rem; display: block; line-height: 1.4; }
+        .auth-editorial-motto { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 1.5rem; letter-spacing: 0.02em; }
+        .auth-editorial-title { font-size: 2.6rem; color: var(--text-pure); letter-spacing: -0.01em; }
+        .form-field-group { margin-bottom: 1.75rem; position: relative; }
+        .luxury-field-label { display: block; font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; font-weight: 500; }
+        .luxury-input-field { width: 100%; background: rgba(9, 13, 22, 0.65); border: 1px solid rgba(212, 175, 55, 0.15); padding: 1.1rem 1.25rem; border-radius: 8px; color: var(--text-pure); font-size: 0.95rem; outline: none; }
+        .password-input-wrapper { position: relative; display: flex; align-items: center; width: 100%; }
+        .password-input-wrapper .luxury-input-field { padding-right: 3.5rem; }
+        .btn-toggle-vision { position: absolute; right: 1.25rem; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem; padding: 0.25rem; outline: none; z-index: 10; }
+        .meta-utilities-row { display: flex; justify-content: flex-end; margin-top: 0.5rem; margin-bottom: 1.5rem; }
+        .link-forgot-password { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; }
+        .link-forgot-password:hover { color: var(--gold-primary); text-decoration: underline; }
+        .action-feedback-box { margin-top: 1.5rem; font-size: 0.85rem; text-align: center; padding: 0.85rem; border-radius: 6px; display: none; color: var(--text-pure); }
+        .auth-footer-navigator { text-align: center; margin-top: 2.5rem; font-size: 0.9rem; color: var(--text-muted); }
+        .auth-footer-navigator a { color: var(--gold-primary); text-decoration: none; }
+        @media (max-width: 576px) { .premium-auth-card { padding: 3rem 2rem; } .auth-editorial-title { font-size: 2.1rem; } }
+    </style>
+    <!-- Fixed library script links to permanently eliminate VS Code linter warnings -->
+    <script src="https://jsdelivr.net"></script>
+    <script src="supabase.js"></script>
+</head>
+<body>
+
+    <nav class="lux-navbar">
+        <a href="properties.html" class="lux-logo">Therent Direct <span>Ghana</span></a>
+    </nav>
+
+    <div class="auth-viewport">
+        <div class="premium-auth-card">
+            <header class="auth-editorial-header">
+                <span class="auth-editorial-subtitle">Connect directly with landlords.</span>
+                <span class="auth-editorial-motto">No agent fees/commissions, No stress. Rent Direct.</span>
+                <h1 class="auth-editorial-title">Welcome Back</h1>
+            </header>
+
+            <form id="login-form" onsubmit="executeLogin(event)">
+                <div class="form-field-group">
+                    <label class="luxury-field-label">Email Address</label>
+                    <input type="email" id="login-email" class="luxury-input-field" placeholder="name@domain.com" required>
+                </div>
+
+                <div class="form-field-group" style="margin-bottom: 0.5rem;">
+                    <label class="luxury-field-label">Password</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="login-password" class="luxury-input-field" placeholder="••••••••" required>
+                        <button type="button" class="btn-toggle-vision" onclick="togglePasswordVisionInterface(this)">👁️</button>
+                    </div>
+                </div>
+
+                <div class="meta-utilities-row">
+                    <a href="#" onclick="triggerPasswordResetPipeline(event)" class="link-forgot-password">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-luxury" style="width: 100%; padding: 1.1rem;">Sign In</button>
+                <div id="form-feedback" class="action-feedback-box"></div>
+            </form>
+
+            <p class="auth-footer-navigator">Don't have an account? <a href="signup.html">Create Account</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Fully functional eye visibility feature
+        function togglePasswordVisionInterface(buttonElement) {
+            var input = document.getElementById("login-password");
+            if (input.type === "password") {
+                input.type = "text";
+                buttonElement.innerText = "🙈";
+                buttonElement.style.color = "var(--gold-primary)";
+            } else {
+                input.type = "password";
+                buttonElement.innerText = "👁️";
+                buttonElement.style.color = "var(--text-muted)";
+            }
+        }
+
+        async function triggerPasswordResetPipeline(event) {
+            event.preventDefault();
+            var client = getSupabaseInstance();
+            var email = document.getElementById("login-email").value.trim();
+            var msg = document.getElementById("form-feedback");
+            if (!email) { alert("Please input email address first."); return; }
+            
+            msg.style.display = "block";
+            msg.style.background = "rgba(212, 175, 55, 0.1)";
+            msg.innerText = "Sending reset token details...";
+            
+            await client.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + "/login.html" });
+            msg.style.background = "rgba(16, 185, 129, 0.1)";
+            msg.innerText = "Verification sent! Check your inbox.";
+        }
+
+        async function executeLogin(event) {
+            event.preventDefault();
+            var msg = document.getElementById("form-feedback");
+            var email = document.getElementById("login-email").value;
+            var password = document.getElementById("login-password").value;
+            var client = getSupabaseInstance();
+            if (!client) return;
+
+            msg.style.display = "block";
+            msg.style.background = "rgba(212, 175, 55, 0.1)";
+            msg.innerText = "Authenticating credentials...";
+
+            var authResult = await client.auth.signInWithPassword({ email: email, password: password });
+            if (authResult.error) { 
+                msg.style.background = "rgba(239, 68, 68, 0.1)";
+                msg.innerText = "Error: " + authResult.error.message; 
+                return; 
+            }
+
+            if (authResult.data.user) {
+                msg.style.background = "rgba(16, 185, 129, 0.1)";
+                msg.innerText = "Authorization confirmed! Opening dashboard channels...";
+
+                var profile = await fetchUserProfile(authResult.data.user.id);
+                if (profile) {
+                    if (profile.role === "admin") {
+                        var currentTimestamp = new Date().toISOString();
+                        
+                        // 1. Logs administrative timeline trace inside visitor_logs table
+                        await client
+                            .from("visitor_logs")
+                            .insert([{ session_key: "ADMIN_LOGIN-" + profile.full_name + "-" + currentTimestamp }]);
+
+                        // 2. Automatically updates your 'last_login_at' users table column fields
+                        await client
+                            .from("users")
+                            .update({ last_login_at: currentTimestamp })
+                            .eq("id", authResult.data.user.id);
+
+                        window.location.href = "admin.html";
+                    } else {
+                        window.location.href = "properties.html";
+                    }
+                } else {
+                    window.location.href = "properties.html";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

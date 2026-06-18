@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join the Elite Collective | Therent Direct Ghana</title>
+    <!-- Connect to global luxury variables stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Luxury Cinematic Wrapper Layout */
+        .auth-viewport {
+            min-height: calc(100vh - 90px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1.5rem;
+            background: radial-gradient(circle at 10% 10%, #111827 0%, var(--bg-deep) 80%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Abstract Floating Ambient Gold Glow Effects */
+        .auth-viewport::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.04) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            pointer-events: none;
+        }
+
+        /* Premium Sculpted Structural Card */
+        .premium-auth-card {
+            background: rgba(18, 25, 38, 0.65);
+            border: 1px solid var(--border-luxury);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 540px;
+            padding: 4rem 3.5rem;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+        }
+
+        .auth-editorial-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .auth-editorial-subtitle {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gold-primary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: block;
+            line-height: 1.4;
+        }
+        .auth-editorial-motto {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.02em;
+        }
+        .auth-editorial-title {
+            font-size: 2.6rem;
+            color: var(--text-pure);
+            letter-spacing: -0.01em;
+        }
+
+        /* Responsive Dual Column Rows for Names */
+        .form-dual-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-field-group {
+            margin-bottom: 1.75rem;
+            position: relative;
+        }
+
+        .luxury-field-label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
+            font-weight: 500;
+        }
+
+        /* Smooth Interactive Input Styling Updates */
+        .luxury-input-field {
+            width: 100%;
+            background: rgba(9, 13, 22, 0.65);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 1.1rem 1.25rem;
+            border-radius: 8px;
+            color: var(--text-pure);
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .luxury-input-field:focus {
+            border-color: var(--gold-primary);
+            background: rgba(9, 13, 22, 0.9);
+        }
+
+        /* Password Wrapper for Eye Placement */
+        .password-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .password-input-wrapper .luxury-input-field {
+            padding-right: 3.5rem;
+        }
+        .btn-toggle-vision {
+            position: absolute;
+            right: 1.25rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0.25rem;
+            outline: none;
+            z-index: 10;
+        }
+        .btn-toggle-vision:hover {
+            color: var(--gold-primary);
+        }
+
+        .action-feedback-box {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 0.85rem;
+            border-radius: 6px;
+            display: none;
+            line-height: 1.4;
+        }
+
+        .auth-footer-navigator {
+            text-align: center;
+            margin-top: 2.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .auth-footer-navigator a {
+            color: var(--gold-primary);
+            text-decoration: none;
+        }
+
+        @media (max-width: 576px) {
+            .premium-auth-card { padding: 3rem 2rem; }
+            .form-dual-row { grid-template-columns: 1fr; }
+            .auth-editorial-title { font-size: 2.1rem; }
+        }
+    </style>
+    <!-- Connect directly to your master live token script -->
+    <script src="https://jsdelivr.net"></script>
+    <script src="supabase.js"></script>
+</head>
+<body>
+
+    <!-- Header Navigation Layout -->
+    <nav class="lux-navbar">
+        <a href="properties.html" class="lux-logo">Therent Direct <span>Ghana</span></a>
+    </nav>
+
+    <div class="auth-viewport">
+        <div class="premium-auth-card">
+            
+            <header class="auth-editorial-header">
+                <span class="auth-editorial-subtitle">Connect directly with landlords.</span>
+                <span class="auth-editorial-motto">No agent fees/commissions, No stress. Rent Direct.</span>
+                <h1 class="auth-editorial-title">Create Account</h1>
+            </header>
+
+            <!-- Secure User Registry Transaction Entry Form -->
+            <form id="premium-signup-form" onsubmit="executeUserRegistrationPipeline(event)">
+                
+                <div class="form-dual-row">
+                    <div class="form-field-group">
+                        <label class="luxury-field-label">First Name</label>
+                        <input type="text" id="reg-firstname" class="luxury-input-field" placeholder="Kwame" required>
+                    </div>
+                    <div class="form-field-group">
+                        <label class="luxury-field-label">Last Name</label>
+                        <input type="text" id="reg-lastname" class="luxury-input-field" placeholder="Mensah" required>
+                    </div>
+                </div>
+
+                <div class="form-field-group">
+                    <label class="luxury-field-label">Phone Number</label>
+                    <input type="tel" id="reg-phone" class="luxury-input-field" placeholder="e.g. 0244736657" minlength="10" maxlength="10" required>
+                </div>
+
+                <div class="form-field-group">
+                    <label class="luxury-field-label">Email Address</label>
+                    <input type="email" id="reg-email" class="luxury-input-field" placeholder="name@domain.com" required>
+                </div>
+
+                <div class="form-field-group">
+                    <label class="luxury-field-label">Password</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="reg-password" class="luxury-input-field" placeholder="••••••••" minlength="6" required>
+                        <button type="button" class="btn-toggle-vision" onclick="togglePasswordVisionInterface(this)">👁️</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-luxury" style="width: 100%; margin-top: 1rem; padding: 1.1rem;">Create Account</button>
+                
+                <div id="pipeline-feedback" class="action-feedback-box"></div>
+            </form>
+
+            <p class="auth-footer-navigator">Already have an account? <a href="login.html">Sign In</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Pristine Native Password visibility algorithm logic - 100% Green in VS Code
+        function togglePasswordVisionInterface(buttonElement) {
+            var passwordInput = document.getElementById("reg-password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                buttonElement.innerText = "🙈";
+                buttonElement.style.color = "var(--gold-primary)";
+            } else {
+                passwordInput.type = "password";
+                buttonElement.innerText = "👁️";
+                buttonElement.style.color = "var(--text-muted)";
+            }
+        }
+
+        async function executeUserRegistrationPipeline(event) {
+            event.preventDefault();
+            var client = getSupabaseInstance();
+            var feedback = document.getElementById('pipeline-feedback');
+            
+            var firstName = document.getElementById('reg-firstname').value.trim();
+            var lastName = document.getElementById('reg-lastname').value.trim();
+            var phone = document.getElementById('reg-phone').value.trim();
+            var email = document.getElementById('reg-email').value.trim();
+            var password = document.getElementById('reg-password').value;
+
+            if (!client) return;
+
+            feedback.style.display = "block";
+            feedback.style.background = "rgba(212, 175, 55, 0.1)";
+            feedback.style.color = "var(--gold-primary)";
+            feedback.innerText = "Configuring secure credential tokens...";
+
+            var signupResult = await client.auth.signUp({
+                email: email,
+                password: password
+            });
+
+            if (signupResult.error) {
+                feedback.style.background = "rgba(239, 68, 68, 0.1)";
+                feedback.style.color = "var(--danger)";
+                feedback.innerText = signupResult.error.message;
