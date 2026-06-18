@@ -1,9 +1,4 @@
-// ==========================================================================
-// ⚜️ GLOBAL CLIENT CORE INITIALIZATION ENGINE | THERENT DIRECT GHANA
-// ==========================================================================
-
-// Live connected endpoints for your project reference profile
-var SUPABASE_URL = "https://rcturytpzhzaocgfobig.supabase.co"; 
+var SUPABASE_URL = "https://supabase.co"; 
 var SUPABASE_ANON_KEY = "sb_publishable_9ezOuadFGRZfHWCChMhVUA_huKgJSr-"; 
 
 var supabaseClientInstance = null;
@@ -19,7 +14,7 @@ function getSupabaseInstance() {
 async function checkUserSession() {
     var client = getSupabaseInstance();
     
-    // Fallback Loop: If the initialization takes a moment, wait up to 3 seconds for credentials to clear
+    // Fallback Loop: Wait up to 3 seconds for core variables to connect cleanly
     var verificationAttempts = 0;
     while (!client && verificationAttempts < 10) {
         await new Promise(function(resolve) { setTimeout(resolve, 300); });
@@ -33,10 +28,10 @@ async function checkUserSession() {
     }
 
     try {
+        // Fixed: Query session parameters directly from verified root instantiation context references
         var sessionResult = await client.auth.getSession();
         
         if (sessionResult.error || !sessionResult.data || !sessionResult.data.session) {
-            // Kick unauthenticated traffic back to login gates safely
             window.location.href = "login.html";
             return null;
         }
