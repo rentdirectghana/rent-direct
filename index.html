@@ -1,12 +1,68 @@
 <!DOCTYPE html>
-<html>
-<head><link rel="stylesheet" href="styles.css">
-  <title>Rent Direct</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therent Direct Ghana | Rent Broker-Free</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .hero-viewport {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1e293b 0%, var(--bg-deep) 100%);
+            padding: 2rem;
+        }
+        .hero-card {
+            max-width: 600px;
+            background: rgba(18, 25, 38, 0.4);
+            border: 1px solid var(--border-luxury);
+            padding: 4rem 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+        .hero-brand {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--gold-primary);
+            margin-bottom: 1.5rem;
+            display: block;
+            font-weight: 600;
+        }
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        .hero-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+        @media (max-width: 576px) {
+            .hero-title { font-size: 2.5rem; }
+            .hero-card { padding: 3rem 1.5rem; }
+        }
+    </style>
 </head>
 <body>
 
-  <h1>Welcome to Rent Direct</h1>
-  <p>Find apartments without agents</p>
+    <div class="hero-viewport">
+        <div class="hero-card">
+            <span class="hero-brand">Therent Direct Ghana</span>
+            <h1 class="hero-title">Welcome to<br><span>Rent Direct</span></h1>
+            <p class="hero-subtitle">Find premium verified apartments directly from landlords across Ghana. Zero agent fees, zero commissions, zero stress.</p>
+            
+            <!-- Luxury Navigation Trigger Action Links Links -->
+            <a href="signup.html" class="btn-luxury" style="width: 100%; padding: 1.2rem; margin-bottom: 1.25rem;">Create Your Account</a>
+            <a href="login.html" style="color: var(--text-pure); display: block; font-size: 0.9rem; text-decoration: none; letter-spacing: 0.05em; margin-top: 1.5rem;">Already a member? <span style="color: var(--gold-primary); text-decoration: underline;">Sign In</span></a>
+        </div>
+    </div>
 
 </body>
 </html>
