@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Property Details | Therent Direct Ghana</title>
+    <!-- Hardware Browser Speed Cache-Control Vector Injection -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
     <link rel="stylesheet" href="styles.css">
     <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-deep); color: var(--text-pure); }
         .details-container { max-width: 1250px; margin: 3rem auto; padding: 0 2rem; }
         .details-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; align-items: start; }
         .view-window { background: var(--bg-surface); border: 1px solid var(--border-luxury); border-radius: 16px; padding: 2.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
@@ -49,13 +52,6 @@
             </aside>
         </div>
     </div>
-    <footer style="background: #111827; border-top: 1px solid var(--border-luxury); padding: 5rem 2rem 3rem 2rem; margin-top: 6rem; position: relative;">
-        <div style="max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr 1.2fr; gap: 4rem; align-items: start;">
-            <div><h3 style="color: var(--text-pure); font-size: 1.6rem; margin-bottom: 1rem; font-family: 'Cormorant Garamond', serif;">Therent Direct Ghana</h3><p style="color: var(--text-muted); font-size: 0.85rem;">Connecting home seekers directly with property owners across Ghana.</p></div>
-            <div><h4 style="color: var(--gold-primary); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 1.5rem;">Executive Support</h4><div style="font-size: 0.95rem; display: flex; flex-direction: column; gap: 1.25rem;"><a href="tel:0541456133" style="color: var(--text-pure); text-decoration: none;">054-145-6133</a><a href="mailto:rentdirect25@outlook.com" style="color: var(--text-pure); text-decoration: none;">rentdirect25@outlook.com</a></div></div>
-            <div style="display: flex; flex-direction: column; gap: 1.25rem;"><a href="https://wa.me" target="_blank" class="premium-wa-banner">Chat on WhatsApp Desk</a><a href="https://tiktok.com" target="_blank" class="premium-tt-banner">Follow us @rentdirect</a></div>
-        </div>
-    </footer>
     <script>
         var client = supabase.createClient("https://supabase.co", "sb_publishable_9ezOuadFGRZfHWCChMhVUA_huKgJSr-");
         var targetedPropertyId = new URLSearchParams(window.location.search).get("id");
@@ -105,3 +101,15 @@
             } catch (err) { console.error(err); }
         }
 
+        async function confirmBookingPass() {
+            var selectedDate = document.getElementById("inspection-calendar-input").value;
+            if (!selectedDate) { alert("Please pick your preferred walkthrough date first."); return; }
+            try {
+                await client.from("inspections").insert([{ tenant_id: activeUserId, property_id: targetedPropertyId, preferred_date: selectedDate, status: "pending" }]);
+                alert("Walkthrough Scheduled Successfully! Moving to your tracking dashboard...");
+                window.location.href = "dashboard.html";
+            } catch (fault) { console.error(fault); }
+        }
+    </script>
+</body>
+</html>
