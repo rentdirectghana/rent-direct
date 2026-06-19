@@ -3,66 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Therent Direct Ghana | Rent Broker-Free</title>
+    <title>Therent Direct Ghana | Broker-Free Luxury Housing Marketplace</title>
+    
+    <!-- ⚡ HARDWARE CACHE VECTOR: Forces phones/laptops to open the page instantly -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
+    
     <link rel="stylesheet" href="styles.css">
     <style>
         .hero-viewport {
-            min-height: 100vh;
+            min-height: calc(100vh - 80px);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
+            padding: 4rem 2rem;
             background: radial-gradient(circle at center, #1e293b 0%, var(--bg-deep) 100%);
-            padding: 2rem;
         }
-        .hero-card {
-            max-width: 600px;
-            background: rgba(18, 25, 38, 0.4);
-            border: 1px solid var(--border-luxury);
-            padding: 4rem 3rem;
-            border-radius: 20px;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-        }
-        .hero-brand {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
+        .editorial-badge {
             color: var(--gold-primary);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            font-weight: 700;
             margin-bottom: 1.5rem;
-            display: block;
-            font-weight: 600;
         }
-        .hero-title {
+        .main-landing-title {
             font-size: 3.5rem;
-            margin-bottom: 1rem;
             line-height: 1.2;
+            font-weight: 800;
+            color: var(--text-pure);
+            max-width: 800px;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
         }
-        .hero-subtitle {
+        .main-landing-title span {
+            color: var(--gold-primary);
+        }
+        .editorial-subtext {
+            font-size: 1.15rem;
             color: var(--text-muted);
-            font-size: 1.1rem;
+            max-width: 600px;
             margin-bottom: 3rem;
             line-height: 1.6;
         }
-        @media (max-width: 576px) {
-            .hero-title { font-size: 2.5rem; }
-            .hero-card { padding: 3rem 1.5rem; }
+        .cta-button-group {
+            display: flex;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 440px;
+        }
+        .cta-link {
+            flex: 1;
+            padding: 1.2rem 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        .cta-primary {
+            background: var(--gold-primary);
+            color: #090d16;
+            border: 1px solid var(--gold-primary);
+        }
+        .cta-primary:hover {
+            background: #bfa032;
+            border-color: #bfa032;
+        }
+        .cta-secondary {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-pure);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        @media (max-width: 768px) {
+            .main-landing-title { font-size: 2.5rem; }
+            .cta-button-group { flex-direction: column; gap: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="hero-viewport">
-        <div class="hero-card">
-            <span class="hero-brand">Therent Direct Ghana</span>
-            <h1 class="hero-title">Welcome to<br><span>Rent Direct</span></h1>
-            <p class="hero-subtitle">Find premium verified apartments directly from landlords across Ghana. Zero agent fees, zero commissions, zero stress.</p>
-            
-            <!-- Luxury Navigation Trigger Action Links Links -->
-            <a href="signup.html" class="btn-luxury" style="width: 100%; padding: 1.2rem; margin-bottom: 1.25rem;">Create Your Account</a>
-            <a href="login.html" style="color: var(--text-pure); display: block; font-size: 0.9rem; text-decoration: none; letter-spacing: 0.05em; margin-top: 1.5rem;">Already a member? <span style="color: var(--gold-primary); text-decoration: underline;">Sign In</span></a>
+    <!-- Premium Brand Navigation Strip Header -->
+    <nav class="lux-navbar">
+        <a href="index.html" class="lux-logo">Therent Direct <span>Ghana</span></a>
+        <div class="nav-links">
+            <a href="login.html">Sign In</a>
+            <a href="signup.html" style="color: var(--gold-primary); font-weight: 600;">Create Account</a>
         </div>
-    </div>
+    </nav>
 
+    <!-- Extreme High-Speed Fluid Landing Core Frame -->
+    <main class="hero-viewport">
+        <span class="editorial-badge">Premium Housing Marketplace</span>
+        <h1 class="main-landing-title">Find Your Next Dream Apartment <span>No Agents</span></h1>
+        <p class="editorial-subtext">Welcome to Ghana's luxury, direct-to-owner property catalog. Zero agent stresses, zero commission fees, 100% verified listings.</p>
+        
+        <div class="cta-button-group">
+            <a href="signup.html" class="cta-link cta-primary">Get Started Free</a>
+            <a href="login.html" class="cta-link cta-secondary">Existing Sign In</a>
+        </div>
+    </main>
+
+    <!-- ⚡ HIGH PERFORMANCE ASYNC ENGINE: Loads libraries invisibly at the bottom -->
+    <script src="https://jsdelivr.net"></script>
+    <script>
+        // High speed token cache check
+        document.addEventListener("DOMContentLoaded", function() {
+            var activeSessionToken = localStorage.getItem("trd_user_id");
+            if (activeSessionToken) {
+                // If user is already authenticated, slide them directly straight into the houses feed
+                window.location.href = "properties.html";
+            }
+        });
+    </script>
 </body>
 </html>

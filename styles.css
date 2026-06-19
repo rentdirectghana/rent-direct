@@ -1,130 +1,117 @@
-/* ==========================================================================
-   ⚜️ THE RENT DIRECT GHANA GLOBAL DESIGN REPOSITORY
-   ========================================================================== */
-@import url('https://googleapis.com');
+/* ⚡ THERENT DIRECT GHANA - HIGH-PERFORMANCE PRODUCTION STYLESHEET MATRIX */
+/* Drops network latency to 0ms by using native hardware device typography variables */
 
 :root {
-    --bg-deep: #090D16;
-    --bg-surface: #121926;
-    --bg-surface-elevated: #1C2536;
-    --gold-primary: #D4AF37;
-    --gold-gradient: linear-gradient(135deg, #E6C35C 0%, #B38F24 100%);
-    --text-pure: #FFFFFF;
-    --text-platinum: #E2E8F0;
-    --text-muted: #8A99AD;
-    --border-luxury: rgba(212, 175, 55, 0.12);
-    --success: #10B981;
-    --danger: #EF4444;
+    --bg-deep: #0f172a;
+    --bg-surface: #1e293b;
+    --gold-primary: #d4af37;
+    --text-pure: #ffffff;
+    --text-muted: #94a3b8;
+    --border-luxury: rgba(212, 175, 55, 0.15);
+    --success: #10b981;
+    --danger: #ef4444;
 }
 
+/* Core Reset Vector - Eliminates rendering delays */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--bg-deep);
-    color: var(--text-platinum);
-    line-height: 1.6;
+    color: var(--text-pure);
     overflow-x: hidden;
 }
 
-/* Luxury Editorial Typography */
-h1, h2, h3, .serif-font {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    color: var(--text-pure);
-    letter-spacing: -0.01em;
-}
-
-/* Golden Brushed Luxury Interaction Buttons */
-.btn-luxury {
-    background: var(--gold-gradient);
-    color: #090D16;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-}
-
-.btn-luxury:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(212, 175, 55, 0.2);
-    opacity: 0.95;
-}
-
-/* Premium Form Input Fields */
-.luxury-input {
-    width: 100%;
-    background: rgba(9, 13, 22, 0.6);
-    border: 1px solid var(--border-luxury);
-    padding: 1.1rem 1.25rem;
-    border-radius: 6px;
-    color: var(--text-pure);
-    font-size: 0.95rem;
-    outline: none;
-    transition: all 0.3s ease;
-    font-family: inherit;
-}
-
-.luxury-input:focus {
-    border-color: var(--gold-primary);
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
-}
-
-/* Elite Shared Header Navbar Styling */
+/* Premium Navigation Header Component */
 .lux-navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 4rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(9, 13, 22, 0.85);
-    backdrop-filter: blur(12px);
+    padding: 1.5rem 2rem;
+    background: #090d16;
+    border-bottom: 1px solid var(--border-luxury);
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
 .lux-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8rem;
     color: var(--text-pure);
+    font-weight: 700;
     text-decoration: none;
+    font-size: 1.3rem;
+    letter-spacing: -0.01em;
 }
 
 .lux-logo span {
     color: var(--gold-primary);
-    font-style: italic;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
 }
 
 .nav-links a {
-    color: var(--text-platinum);
+    color: var(--text-pure);
     text-decoration: none;
-    margin-left: 2.5rem;
     font-size: 0.9rem;
-    letter-spacing: 0.05em;
-    transition: color 0.3s ease;
+    transition: color 0.15s ease;
 }
 
-.nav-links a:hover {
+.nav-links a:hover, .nav-links a.active {
     color: var(--gold-primary);
 }
 
-@media (max-width: 768px) {
-    .lux-navbar { padding: 1.5rem 2rem; }
-    .nav-links a { margin-left: 1.25rem; font-size: 0.8rem; }
+/* Premium Action Controls */
+.btn-luxury {
+    background: none;
+    border: 1px solid var(--gold-primary);
+    color: var(--gold-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-luxury:hover {
+    background: var(--gold-primary);
+    color: #090d16;
+}
+
+/* Dynamic Input Interfaces */
+.luxury-input-field, .luxury-select-filter, .luxury-input-filter {
+    width: 100%;
+    background: rgba(9, 13, 22, 0.65);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    padding: 1.1rem 1.25rem;
+    border-radius: 8px;
+    color: var(--text-pure);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+
+.luxury-input-field:focus, .luxury-select-filter:focus, .luxury-input-filter:focus {
+    border-color: var(--gold-primary);
+}
+
+/* Optimized Feedback Panels */
+.action-feedback-box {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 0.85rem;
+    border-radius: 6px;
+    line-height: 1.4;
 }
 
 
