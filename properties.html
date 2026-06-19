@@ -3,284 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Your Next Home | Therent Direct Ghana</title>
-    <!-- Connect to the core luxury stylesheet variables -->
-    <link rel="stylesheet" href="styles.css">
+    <title>Available Apartments | Therent Direct Ghana</title>
+    <!-- Hardware Browser Speed Cache-Control Vector Injection -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
     <style>
-        .catalog-wrapper {
-            max-width: 1350px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-        }
-
-        /* Editorial Header Elements */
-        .catalog-header {
-            text-align: center;
-            margin-bottom: 3.5rem;
-        }
-        .catalog-subtitle {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.25em;
-            color: var(--gold-primary);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: block;
-        }
-        .catalog-title {
-            font-size: 3.5rem;
-            color: var(--text-pure);
-        }
-        .catalog-title span {
-            font-style: italic;
-            color: var(--text-pure);
-        }
-
-        /* ==========================================================================
-           🔥 MULTI-PARAMETER LUXURY SEARCH & FILTER CONSOLE STYLING
-           ========================================================================== */
-        .search-console-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-luxury);
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin-bottom: 4rem;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-        }
-        
-        .search-grid-inputs {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            align-items: flex-end;
-        }
-
-        .filter-block {
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-        }
-        
-        .console-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--gold-primary);
-            font-weight: 500;
-        }
-
-        /* Clean Luxury Input Modifications */
-        .luxury-console-input {
-            width: 100%;
-            background: rgba(9, 13, 22, 0.65);
-            border: 1px solid var(--border-luxury);
-            padding: 1rem 1.25rem;
-            border-radius: 8px;
-            color: var(--text-pure);
-            font-size: 0.95rem;
-            outline: none;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-        
-        .luxury-console-input:focus {
-            border-color: var(--gold-primary);
-            box-shadow: 0 0 12px rgba(212, 175, 55, 0.1);
-        }
-
-        select.luxury-console-input {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='12' height='12' fill='%23D4AF37' viewBox='0 0 16 16'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>");
-            background-repeat: no-repeat;
-            background-position: calc(100% - 1.25rem) center;
-            padding-right: 2.5rem;
-        }
-
-        .console-actions-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .results-meta-counter {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            letter-spacing: 0.03em;
-        }
-        .results-meta-counter span {
-            color: var(--text-pure);
-            font-weight: 600;
-        }
-
-        .btn-clear-filters {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-decoration: underline;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .btn-clear-filters:hover { color: var(--gold-primary); }
-
-        /* Responsive 3-Column Luxury Grid Architecture */
-        .property-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 2.5rem;
-        }
-
-        /* Premium Estate Card Design Layouts */
-        .property-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-luxury);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            transition: all 0.4s ease;
-            display: flex;
-            flex-direction: column;
-        }
-        .property-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(212, 175, 55, 0.4);
-        }
-
-        .img-container {
-            position: relative;
-            height: 260px;
-            overflow: hidden;
-            background: #0d131f;
-        }
-        .img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .img-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, transparent 50%, rgba(9, 13, 22, 0.9));
-        }
-
-        .location-tag {
-            position: absolute;
-            bottom: 1.25rem;
-            left: 1.25rem;
-            color: var(--text-pure);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .card-body {
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-        .card-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--text-pure);
-            margin-bottom: 0.5rem;
-        }
-
-        .card-specs-row {
-            display: flex;
-            gap: 1.25rem;
-            margin-bottom: 2rem;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-        .card-specs-row span {
-            color: var(--gold-primary);
-        }
-
-        .card-footer {
-            margin-top: auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .price-label {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--text-pure);
-        }
-        .price-label span {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .status-msg {
-            text-align: center;
-            padding: 4rem;
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            font-style: italic;
-            grid-column: 1 / -1;
-        }
-
-        @media (max-width: 768px) {
-            .catalog-title { font-size: 2.5rem; }
-            .search-console-card { padding: 1.5rem; }
-            .console-actions-row { flex-direction: column; gap: 1rem; text-align: center; }
-            .property-grid { grid-template-columns: 1fr; }
-        }
+        :root { --bg-deep: #0f172a; --bg-surface: #1e293b; --gold-primary: #d4af37; --text-pure: #ffffff; --text-muted: #94a3b8; --border-luxury: rgba(212, 175, 55, 0.15); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg-deep); color: var(--text-pure); padding-bottom: 5rem; }
+        .lux-navbar { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; background: #090d16; border-bottom: 1px solid var(--border-luxury); }
+        .lux-logo { color: var(--text-pure); font-weight: 700; text-decoration: none; font-size: 1.3rem; }
+        .lux-logo span { color: var(--gold-primary); }
+        .nav-links a { color: var(--text-pure); text-decoration: none; margin-left: 1.5rem; font-size: 0.9rem; }
+        .nav-links a.active { color: var(--gold-primary); font-weight: 600; }
+        .hero-editorial-section { text-align: center; padding: 5rem 2rem 3rem 2rem; background: radial-gradient(circle at center, #1e293b 0%, var(--bg-deep) 100%); }
+        .hero-editorial-title { font-size: 3.2rem; color: var(--text-pure); margin-bottom: 0.5rem; letter-spacing: -0.02em; font-weight: 700; }
+        .filter-panel-card { max-width: 1200px; margin: 0 auto 3rem auto; background: rgba(18, 25, 38, 0.65); border: 1px solid var(--border-luxury); padding: 2rem; border-radius: 16px; backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .filter-input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; }
+        .filter-field-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .filter-field-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold-primary); font-weight: 600; }
+        .luxury-select-filter, .luxury-input-filter { width: 100%; background: rgba(9, 13, 22, 0.8); border: 1px solid rgba(212, 175, 55, 0.2); padding: 0.9rem 1rem; border-radius: 8px; color: var(--text-pure); font-size: 0.9rem; outline: none; }
+        .btn-filter-trigger { background: var(--gold-primary); color: #090d16; border: none; padding: 1rem 2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 8px; cursor: pointer; width: 100%; font-size: 1rem; }
+        .btn-luxury { background: none; border: 1px solid var(--gold-primary); color: var(--gold-primary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; cursor: pointer; border-radius: 6px; width: 100%; padding: 0.9rem; text-align: center; text-decoration: none; font-size: 0.85rem; display: block; }
+        .btn-luxury:hover { background: var(--gold-primary); color: #090d16; }
+        .catalog-showcase-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2.5rem; padding: 0 1rem; }
+        .premium-property-card { background: var(--bg-surface); border: 1px solid var(--border-luxury); border-radius: 12px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.3); transition: transform 0.3s ease; display: flex; flex-direction: column; }
+        .premium-property-card:hover { transform: translateY(-6px); }
+        .card-media-viewport { height: 230px; background: #090d16; position: relative; }
+        .card-media-viewport img, .card-media-viewport video { width: 100%; height: 100%; object-fit: cover; }
+        .card-price-overlay { position: absolute; bottom: 1rem; left: 1rem; background: rgba(9, 13, 22, 0.85); padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--gold-primary); font-weight: 700; color: var(--text-pure); font-size: 1.1rem; }
+        .card-body-content { padding: 1.75rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-meta-town { font-size: 0.75rem; text-transform: uppercase; color: var(--gold-primary); font-weight: 600; margin-bottom: 0.35rem; }
+        .card-main-title { font-size: 1.35rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-pure); line-height: 1.3; }
+        .card-spec-row { display: flex; gap: 1.25rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; padding-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .card-spec-row span { color: var(--text-pure); font-weight: 600; }
+        .feedback-empty-state { text-align: center; padding: 5rem 2rem; color: var(--text-muted); grid-column: 1 / -1; font-size: 1.1rem; }
     </style>
-    <!-- Fixed library script links to permanently eliminate linter warnings -->
-    <script src="https://jsdelivr.net"></script>
-    <script src="supabase.js"></script>
 </head>
 <body>
-
-    <!-- Global Navigation Header Bar -->
     <nav class="lux-navbar">
         <a href="properties.html" class="lux-logo">Therent Direct <span>Ghana</span></a>
-        <div class="nav-links">
-            <a href="properties.html" style="color: var(--gold-primary);">Properties</a>
-            <a href="dashboard.html">My Dashboard</a>
-            <a href="payment.html">Unlock Landlord Contacts</a>
-            <a href="#" onclick="executeLogout(event)" style="opacity: 0.6;">Sign Out</a>
-        </div>
+        <div class="nav-links"><a href="properties.html" class="active">Properties</a><a href="dashboard.html">My Dashboard</a><a href="payment.html" style="color:var(--gold-primary); font-weight:600;">Unlock Landlord Contacts</a><a href="#" onclick="executeGlobalLogout(event)" style="opacity:0.7;">Sign Out</a></div>
     </nav>
+    <header class="hero-editorial-section"><h1 class="hero-editorial-title">Find Your Next Dream Apartment No Agents</h1></header>
+    <section class="filter-panel-card">
+        <div class="filter-input-grid">
+            <div class="filter-field-group">
+                <label class="filter-field-label">City / Region</label>
+                <select id="filter-city" class="luxury-select-filter">
+                    <option value="ALL">Select Region</option>
+                    <option value="Greater Accra">Greater Accra</option><option value="Ashanti">Ashanti</option><option value="Western">Western</option><option value="Eastern">Eastern</option><option value="Central">Central</option><option value="Volta">Volta</option><option value="Northern">Northern</option><option value="Upper East">Upper East</option><option value="Upper West">Upper West</option><option value="Bono">Bono</option><option value="Bono East">Bono East</option><option value="Ahafo">Ahafo</option><option value="Savannah">Savannah</option><option value="North East">North East</option><option value="Oti">Oti</option><option value="Western North">Western North</option>
+                </select>
+            </div>
+            <div class="filter-field-group"><label class="filter-field-label">Specific Town / Area</label><input type="text" id="filter-town" class="luxury-input-filter" placeholder="e.g. East Legon, Osu, Kumasi"></div>
+            <div class="filter-field-group">
+                <label class="filter-field-label">Apartment Type</label>
+                <select id="filter-type" class="luxury-select-filter">
+                    <option value="ALL">Select Room Type</option><option value="Single Room">Single Room</option><option value="Single Room and Porch">Single Room and Porch</option><option value="Chamber and Hall">Chamber and Hall</option><option value="1 Bedroom Apartment">1 Bedroom Apartment</option><option value="2 Bedroom Apartment">2 Bedroom Apartment</option><option value="3 Bedroom+">3 Bedroom+</option><option value="Shared Apartment (Roommate)">Shared Apartment (Roommate)</option>
+                </select>
+            </div>
+            <div class="filter-field-group"><label class="filter-field-label">Max Budget (GH₵ / Month)</label><input type="number" id="filter-price" class="luxury-input-filter" placeholder="Maximum Price"></div>
+            <div class="filter-field-group">
+                <label class="filter-field-label">Bathrooms Required</label>
+                <select id="filter-baths" class="luxury-select-filter"><option value="ALL">Select Bathroom Type</option><option value="1">1 Bath</option><option value="2">2 Baths</option><option value="3">3+ Baths</option></select>
+            </div>
+            <div class="filter-field-group">
+                <label class="filter-field-label">Rent Duration Advance</label>
+                <select id="filter-duration" class="luxury-select-filter"><option value="ALL">Any Contract Length</option><option value="6 Months">6 Months Advance</option><option value="1 Year">1 Year Advance</option><option value="2 Years">2 Years Advance</option></select>
+            </div>
+        </div>
+        <button class="btn-filter-trigger" onclick="triggerCatalogSearchQueryEngine()">Search Now</button>
+    </section>
+    <main class="catalog-showcase-grid" id="properties-feed-container"><div class="feedback-empty-state">Loading house listings...</div></main>
 
-    <div class="catalog-wrapper">
-        <header class="catalog-header">
-            <span class="catalog-subtitle">No Brokers. No Stress. Rent Direct.</span>
-            <h1 class="catalog-title">Find Your Next <span>Residence</span></h1>
-        </header>
-
-        <!-- 🔥 MULTI-PARAMETER LUXURY SEARCH CONSOLE BOX -->
-        <section class="search-console-card">
-            <div class="search-grid-inputs">
-                
-                <!-- Text Area Input Lookup -->
-                <div class="filter-block">
-                    <label class="console-label">Search Town / Landmark</label>
-                    <input type="text" id="search-text-input" class="luxury-console-input" placeholder="e.g. East Legon, Osu, Kumasi" oninput="executeMasterRealEstateFilter()">
-                </div>
-
-                <!-- Structured Region Array Selector Mapping -->
-                <div class="filter-block">
-                    <label class="console-label">Ghanaian Region</label>
-                    <select id="filter-region" class="luxury-console-input" onchange="executeMasterRealEstateFilter()">
-                        <option value="all">All 16 Regions</option>
-                        <option value="Greater Accra">Greater Accra Region</option>
-                        <option value="Ashanti">Ashanti Region</option>
-                        <option value="Western">Western Region</option>
-                        <option value="Central">Central Region</option>
-                        <option value="Eastern">Eastern Region</option>
-                        <option value="Volta">Volta Region</option>
-                        <option value="Northern">Northern Region</option>
-                        <option value="Bono">Bono Region</option>
-                        <option value="Ahafo">Ahafo Region</option>
-                        <option value="Bono East">Bono East Region</option>
+    <!-- ⚡ HIGH SPEED SWAP: Compressed production minified library loaded at the absolute bottom -->
+    <script src="https://jsdelivr.net"></script>
+    <script>
+        var client = supabase.createClient("https://supabase.co", "sb_publishable_9ezOuadFGRZfHWCChMhVUA_huKgJSr-");
+        var activePropertiesList = [];
+        window.onload = function() { triggerCatalogSearchQueryEngine(); };
+        async function triggerCatalogSearchQueryEngine() {
+            var feedEl = document.getElementById("properties-feed-container");
+            if (!feedEl) return;
+            feedEl.innerHTML = '<div class="feedback-empty-state">Loading house listings...</div>';
+            try {
+                var queryResult = await client.from("properties").select("*");
+                if (queryResult.error) throw queryResult.error;
+                activePropertiesList = queryResult.data || [];
+                var chosenCity = document.getElementById("filter-city").value;

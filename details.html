@@ -4,112 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Property Details | Therent Direct Ghana</title>
-    <!-- Hardware Browser Speed Cache-Control Vector Injection -->
     <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
-    <link rel="stylesheet" href="styles.css">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-deep); color: var(--text-pure); }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0f172a; color: #ffffff; margin: 0; padding: 0; }
+        .lux-navbar { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; background: #090d16; border-bottom: 1px solid rgba(212, 175, 55, 0.15); }
+        .lux-logo { color: #ffffff; font-weight: 700; text-decoration: none; font-size: 1.3rem; }
+        .lux-logo span { color: #d4af37; }
+        .nav-links a { color: #ffffff; text-decoration: none; margin-left: 1.5rem; font-size: 0.9rem; }
         .details-container { max-width: 1250px; margin: 3rem auto; padding: 0 2rem; }
         .details-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; align-items: start; }
-        .view-window { background: var(--bg-surface); border: 1px solid var(--border-luxury); border-radius: 16px; padding: 2.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .media-box { background: #090d16; border-radius: 8px; overflow: hidden; height: 450px; margin-bottom: 2rem; position: relative; }
-        .media-box img, .media-box video { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .show-title { font-size: 2.6rem; margin-bottom: 0.5rem; color: var(--text-pure); }
-        .show-location { color: var(--gold-primary); font-size: 1rem; margin-bottom: 1.5rem; font-weight: 500; }
-        .show-specs { display: flex; gap: 1.5rem; font-size: 0.85rem; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; margin-bottom: 1.5rem; }
-        .show-specs span { color: var(--text-pure); font-weight: 600; }
-        .show-description { color: var(--text-platinum); line-height: 1.7; font-size: 0.95rem; }
-        .monetization-box { background: var(--bg-surface); border: 1px solid var(--border-luxury); border-radius: 16px; padding: 2.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.4); text-align: center; }
-        .price-tag-value { font-size: 2.2rem; font-weight: 700; color: var(--text-pure); margin-bottom: 1.5rem; }
-        .price-tag-value span { font-size: 0.9rem; color: var(--text-muted); font-weight: 400; }
+        .view-window { background: #1e293b; border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 16px; padding: 2.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        
+        .gallery-viewport { background: #090d16; border-radius: 12px; overflow: hidden; height: 480px; margin-bottom: 1.5rem; position: relative; display: flex; align-items: center; justify-content: center; }
+        .gallery-viewport img, .gallery-viewport video { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .gallery-viewport img.active, .gallery-viewport video.active { display: block; }
+        .gallery-nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(9, 13, 22, 0.8); border: 1px solid #d4af37; color: #ffffff; padding: 1rem 0.75rem; cursor: pointer; font-weight: 700; border-radius: 4px; z-index: 10; font-size: 1.2rem; }
+        .btn-prev { left: 1rem; } .btn-next { right: 1rem; }
+        .gallery-counter-badge { position: absolute; top: 1rem; right: 1rem; background: rgba(9, 13, 22, 0.85); border: 1px solid rgba(212, 175, 55, 0.15); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.8rem; color: #d4af37; font-weight: 600; font-family: monospace; }
+
+        .show-title { font-size: 2.6rem; margin-bottom: 0.5rem; color: #ffffff; font-weight: 700; }
+        .show-location { color: #d4af37; font-size: 1rem; margin-bottom: 1.5rem; font-weight: 500; }
+        .show-specs { display: flex; gap: 1.5rem; font-size: 0.85rem; text-transform: uppercase; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+        .show-specs span { color: #ffffff; font-weight: 600; }
+        .show-description { color: #cbd5e1; line-height: 1.8; font-size: 1rem; }
+        
+        .monetization-box { background: #1e293b; border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 16px; padding: 2.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.4); text-align: center; }
+        .price-tag-value { font-size: 2.4rem; font-weight: 700; color: #ffffff; margin-bottom: 1.5rem; }
+        .price-tag-value span { font-size: 0.9rem; color: #94a3b8; font-weight: 400; }
         .calendar-field-group { text-align: left; margin-bottom: 1.5rem; }
-        .calendar-label { font-size: 0.75rem; text-transform: uppercase; color: var(--gold-primary); display: block; margin-bottom: 0.5rem; font-weight: 500; }
-        .unlocked-landlord-card { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; text-align: left; }
-        .premium-wa-banner { background: #25D366; color: #FFFFFF; text-decoration: none; padding: 0.9rem 1.75rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.75rem; width: 100%; max-width: 280px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-        .premium-tt-banner { background: #000000; color: #FFFFFF; text-decoration: none; padding: 0.9rem 1.75rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.75rem; width: 100%; max-width: 280px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
-        @media (max-width: 992px) { .details-grid { grid-template-columns: 1fr; gap: 2rem; } .media-box { height: 300px; } }
+        .calendar-label { font-size: 0.75rem; text-transform: uppercase; color: #d4af37; display: block; margin-bottom: 0.5rem; font-weight: 500; letter-spacing: 0.05em; }
+        .btn-luxury { background: none; border: 1px solid #d4af37; color: #d4af37; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; cursor: pointer; border-radius: 6px; transition: all 0.2s ease; display: block; text-align: center; text-decoration: none; padding: 1.1rem; width: 100%; box-sizing: border-box; font-size: 0.9rem; }
+        .btn-luxury:hover { background: #d4af37; color: #090d16; }
+        .unlocked-landlord-card { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; text-align: left; display: none; }
     </style>
     <script src="https://jsdelivr.net"></script>
 </head>
 <body>
+
     <nav class="lux-navbar">
         <a href="properties.html" class="lux-logo">Therent Direct <span>Ghana</span></a>
-        <div class="nav-links"><a href="properties.html">Properties</a><a href="dashboard.html">My Dashboard</a><a href="payment.html" style="color: var(--gold-primary);">Unlock Landlord Contacts</a></div>
+        <div class="nav-links"><a href="properties.html">Properties</a></div>
     </nav>
+
     <div class="details-container">
         <div class="details-grid">
             <main class="view-window">
-                <div class="media-box" id="media-showcase-viewport"><div style="padding: 4rem; text-align: center; color: var(--text-muted);">Loading media asset layers...</div></div>
-                <h1 class="show-title" id="p-title">---</h1>
-                <div class="show-location" id="p-location">📍 ---</div>
-                <div class="show-specs"><div id="p-beds">🛌 <span>0</span> Bed</div><div id="p-baths">🛀 <span>0</span> Bath</div></div>
-                <p class="show-description" id="p-desc">---</p>
+                <div class="gallery-viewport">
+                    <button class="gallery-nav-btn btn-prev" onclick="shiftGalleryIndex(-1)">&#10094;</button>
+                    <div id="media-slides-container" style="width:100%; height:100%;"></div>
+                    <button class="gallery-nav-btn btn-next" onclick="shiftGalleryIndex(1)">&#10095;</button>
+                    <div class="gallery-counter-badge" id="gallery-counter">0 / 0</div>
+                </div>
+                
+                <h1 class="show-title" id="p-title">Loading...</h1>
+                <div class="show-location" id="p-location">📍 Loading...</div>
+                <div class="show-specs">
+                    <div>🛌 <span id="lbl-beds">0</span> Bed</div>
+                    <div>🛀 <span id="lbl-baths">0</span> Bath</div>
+                </div>
+                <p class="show-description" id="p-desc">Loading apartment overview...</p>
             </main>
+            
             <aside class="monetization-box">
                 <div class="price-tag-value" id="p-price">GH₵0<span> / mo</span></div>
-                <div class="calendar-field-group"><label class="calendar-label">Choose Walkthrough Inspection Date</label><input type="date" id="inspection-calendar-input" class="luxury-input"></div>
-                <div id="action-button-placeholder"><div style="font-size:0.85rem; color:var(--text-muted);">Verifying profile tokens...</div></div>
+                <div class="calendar-field-group">
+                    <label class="calendar-label">Choose Walkthrough Inspection Date</label>
+                    <input type="date" id="inspection-calendar-input" style="background:#090d16; border:1px solid rgba(212,175,55,0.2); padding:0.9rem; color:#fff; width:100%; border-radius:8px; box-sizing: border-box;">
+                </div>
+                
+                <div id="paywall-button-block">
+                    <a href="payment.html" class="btn-luxury">Pay GH₵200 to Unlock Contact</a>
+                </div>
+                <div id="booking-button-block" style="display: none;">
+                    <button class="btn-luxury" onclick="confirmBookingPass()">Confirm Inspection Booking</button>
+                </div>
+                <div class="unlocked-landlord-card" id="landlord-contact-card">
+                    <span style="font-size:0.75rem; text-transform:uppercase; color:#d4af37; display:block; margin-bottom:0.25rem; font-weight:600;">Direct Owner Phone Line</span>
+                    <a href="tel:0000" id="landlord-phone-anchor" style="font-size:1.4rem; color:#ffffff; text-decoration:none; font-family:monospace; font-weight:700;">---</a>
+                </div>
             </aside>
         </div>
     </div>
+
     <script>
         var client = supabase.createClient("https://supabase.co", "sb_publishable_9ezOuadFGRZfHWCChMhVUA_huKgJSr-");
         var targetedPropertyId = new URLSearchParams(window.location.search).get("id");
         var activeUserId = localStorage.getItem("trd_user_id");
-        var globalPropertyData = null;
+        var currentMediaIndex = 0;
+        var totalMediaItems = [];
 
-        document.addEventListener("DOMContentLoaded", async function() {
+        document.addEventListener("DOMContentLoaded", function() {
             if (!targetedPropertyId) { window.location.href = "properties.html"; return; }
-            await loadIndividualPropertyDetails();
+            loadIndividualPropertyDetails();
         });
 
         async function loadIndividualPropertyDetails() {
             try {
-                var propertyQuery = await client.from("properties").select("*").eq("id", targetedPropertyId).single();
-                if (propertyQuery.error) return;
-                globalPropertyData = propertyQuery.data;
+                var query = await client.from("properties").select("*").eq("id", targetedPropertyId).single();
+                if (query.error) return;
+                var data = query.data;
 
-                document.getElementById("p-title").innerText = globalPropertyData.title;
-                document.getElementById("p-location").innerText = "📍 " + globalPropertyData.location;
-                document.getElementById("p-beds").querySelector("span").innerText = globalPropertyData.bedrooms;
-                document.getElementById("p-baths").querySelector("span").innerText = globalPropertyData.bathrooms;
-                document.getElementById("p-desc").innerText = globalPropertyData.description;
-                document.getElementById("p-price").innerHTML = "GH₵" + Number(globalPropertyData.price_ghs).toLocaleString() + "<span> / mo</span>";
+                document.getElementById("p-title").innerText = data.title;
+                document.getElementById("p-location").innerText = "📍 " + data.location;
+                document.getElementById("lbl-beds").innerText = data.bedrooms || 0;
+                document.getElementById("lbl-baths").innerText = data.bathrooms || 0;
+                document.getElementById("p-desc").innerText = data.description;
+                document.getElementById("p-price").innerHTML = "GH₵" + Number(data.price_ghs).toLocaleString() + "<span> / mo</span>";
 
-                var mediaContainer = document.getElementById("media-showcase-viewport");
-                if (globalPropertyData.video_url) { mediaContainer.innerHTML = '<video src="' + globalPropertyData.video_url + '" controls autoplay muted loop></video>'; } 
-                else { mediaContainer.innerHTML = '<img src="' + globalPropertyData.image_url + '" alt="Showcase">'; }
+                var slidesContainer = document.getElementById("media-slides-container");
+                slidesContainer.innerHTML = "";
 
-                var placeholder = document.getElementById("action-button-placeholder");
-                placeholder.innerHTML = "";
+                if (data.video_url) { totalMediaItems.push({ type: 'video', url: data.video_url }); }
+
+                if (data.image_url) {
+                    var imagesArray = data.image_url.split(",");
+                    imagesArray.forEach(function(imgUrl) {
+                        if(imgUrl.trim()) totalMediaItems.push({ type: 'image', url: imgUrl.trim() });
+                    });
+                }
+
+                totalMediaItems.forEach(function(media, idx) {
+                    var el = media.type === 'video' ? document.createElement("video") : document.createElement("img");
+                    el.src = media.url;
+                    el.className = idx === 0 ? "active" : "";
+                    if(media.type === 'video') { el.controls = true; el.muted = true; el.loop = true; }
+                    slidesContainer.appendChild(el);
+                });
+
+                updateGalleryCounterUI();
 
                 if (activeUserId) {
                     var profileQuery = await client.from("users").select("*").eq("id", activeUserId).single();
                     var profile = profileQuery.data;
 
                     if (profile && profile.has_premium_access === true) {
-                        var confirmBtn = document.createElement("button"); confirmBtn.className = "btn-luxury"; confirmBtn.style.width = "100%"; confirmBtn.innerText = "Confirm Inspection Booking"; confirmBtn.addEventListener("click", confirmBookingPass);
-                        var contactCard = document.createElement("div"); contactCard.className = "unlocked-landlord-card"; contactCard.innerHTML = '<span style="font-size:0.75rem; text-transform:uppercase; color:var(--gold-primary); display:block; margin-bottom:0.25rem;">Direct Owner Phone Line</span><a href="tel:' + globalPropertyData.landlord_phone + '" style="font-size:1.4rem; color:var(--text-pure); text-decoration:none; font-family:monospace; font-weight:700;">' + globalPropertyData.landlord_phone + '</a>';
-                        placeholder.appendChild(confirmBtn); placeholder.appendChild(contactCard);
-                    } else {
-                        var paywallLink = document.createElement("a"); paywallLink.href = "payment.html"; paywallLink.className = "btn-luxury"; paywallLink.style.display = "block"; paywallLink.style.marginTop = "1rem"; paywallLink.innerText = "Pay GH₵200 to Schedule Inspection";
-                        placeholder.appendChild(paywallLink);
-                    }
-                } else {
-                    placeholder.innerHTML = '<a href="login.html" class="btn-luxury" style="display:block;">Sign In to Book Inspection</a>';
-                }
-            } catch (err) { console.error(err); }
-        }
-
-        async function confirmBookingPass() {
-            var selectedDate = document.getElementById("inspection-calendar-input").value;
-            if (!selectedDate) { alert("Please pick your preferred walkthrough date first."); return; }
-            try {
-                await client.from("inspections").insert([{ tenant_id: activeUserId, property_id: targetedPropertyId, preferred_date: selectedDate, status: "pending" }]);
-                alert("Walkthrough Scheduled Successfully! Moving to your tracking dashboard...");
-                window.location.href = "dashboard.html";
-            } catch (fault) { console.error(fault); }
-        }
-    </script>
-</body>
-</html>
+                        document.getElementById("paywall-button-block").style.display = "none";
+                        document.getElementById("booking-button-block").style.display = "block";
+                        document.getElementById("landlord-contact-card").style.display = "block";
