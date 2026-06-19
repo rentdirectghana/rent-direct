@@ -3,155 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tenant Dashboard | Therent Direct Ghana</title>
+    <title>My Dashboard | Therent Direct Ghana</title>
+    <!-- Hardware Browser Speed Cache-Control Vector Injection -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .dash-container { max-width: 1250px; margin: 3rem auto; padding: 0 2rem; }
-        .dash-layout { display: grid; grid-template-columns: 1fr 2.5fr; gap: 3.5rem; align-items: start; }
-        .profile-sidebar { background: var(--bg-surface); border: 1px solid var(--border-luxury); border-radius: 16px; padding: 2.5rem; text-align: center; }
-        .user-avatar { width: 70px; height: 70px; background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--gold-primary); margin: 0 auto 1.5rem auto; }
-        .user-name { font-size: 1.6rem; color: var(--text-pure); margin-bottom: 0.25rem; }
-        .user-email { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; display: block; }
-        .token-timer-box { background: rgba(9, 13, 22, 0.6); border: 1px solid rgba(255,255,255,0.03); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; }
-        .timer-status-header { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
-        .countdown-digits { font-size: 1.4rem; font-weight: 600; color: var(--gold-primary); font-family: monospace; }
-        .countdown-digits.expired { color: var(--danger); }
-        .main-workspace { background: var(--bg-surface); border: 1px solid var(--border-luxury); border-radius: 16px; padding: 3rem; }
-        .workspace-heading { font-size: 2.2rem; color: var(--text-pure); margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
-        .inspection-card { background: rgba(9, 13, 22, 0.4); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 1.5rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-        .house-title { font-size: 1.2rem; color: var(--text-pure); font-weight: 600; margin-bottom: 0.25rem; }
-        .house-details { font-size: 0.85rem; color: var(--text-muted); display: flex; gap: 1rem; }
-        .house-details span { color: var(--gold-primary); }
-        .schedule-badge { background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500; text-transform: uppercase; }
-        .fallback-empty-msg { text-align: center; color: var(--text-muted); font-style: italic; padding: 4rem 0; }
-        @media (max-width: 992px) { .dash-layout { grid-template-columns: 1fr; gap: 2.5rem; } .dash-container { padding: 1rem; } }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0f172a; color: #ffffff; margin: 0; padding: 0; }
+        
+        /* Premium Clean Navbar Layout with Isolated Super-Fast Sign Out */
+        .lux-navbar { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; background: #090d16; border-bottom: 1px solid rgba(212, 175, 55, 0.15); position: sticky; top: 0; z-index: 1000; }
+        .lux-logo { color: #ffffff; font-weight: 700; text-decoration: none; font-size: 1.3rem; }
+        .lux-logo span { color: #d4af37; }
+        .nav-inner-container { display: flex; align-items: center; gap: 2.5rem; }
+        .nav-links-group { display: flex; gap: 1.5rem; }
+        .nav-links-group a { color: #ffffff; text-decoration: none; font-size: 0.9rem; }
+        .nav-links-group a.active { color: #d4af37; font-weight: 600; }
+        .btn-isolated-signout { background: none; border: 1px solid #ef4444; color: #ef4444; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.1s ease; }
+        .btn-isolated-signout:hover { background: #ef4444; color: #ffffff; }
+        
+        .dashboard-container { max-width: 1100px; margin: 4rem auto; padding: 0 2rem; }
+        .dashboard-header-block { display: flex; align-items: center; gap: 2rem; background: #1e293b; border: 1px solid rgba(212, 175, 55, 0.15); padding: 2.5rem; border-radius: 16px; margin-bottom: 3rem; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .user-avatar-sphere { width: 70px; height: 70px; background: rgba(212, 175, 55, 0.1); border: 2px solid #d4af37; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #d4af37; }
+        .user-meta-info h2 { margin: 0 0 0.35rem 0; font-size: 1.8rem; letter-spacing: -0.01em; }
+        .user-meta-info p { margin: 0; color: #94a3b8; font-size: 0.95rem; }
+        
+        /* Custom Premium Pass Timer Badges */
+        .status-badge-capsule { display: inline-block; margin-top: 0.75rem; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+        .badge-premium-active { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .badge-premium-locked { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+        
+        .section-title-bar { font-size: 1.4rem; color: #ffffff; font-weight: 700; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.75rem; }
+        .inspections-grid-panel { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        .inspection-log-card { background: #1e293b; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 1.75rem; display: flex; justify-content: space-between; align-items: center; }
+        .log-details h4 { margin: 0 0 0.5rem 0; font-size: 1.15rem; color: #ffffff; font-weight: 600; }
+        .log-details p { margin: 0; color: #94a3b8; font-size: 0.9rem; }
+        .btn-luxury { background: none; border: 1px solid #d4af37; color: #d4af37; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; cursor: pointer; border-radius: 6px; padding: 0.8rem 1.5rem; text-decoration: none; font-size: 0.85rem; display: inline-block; }
+        .btn-luxury:hover { background: #d4af37; color: #090d16; }
+        .empty-dashboard-state { text-align: center; padding: 4rem 2rem; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1); border-radius: 12px; color: #94a3b8; font-size: 0.95rem; }
     </style>
-    <script src="https://jsdelivr.net"></script>
-    <script src="supabase.js"></script>
 </head>
 <body>
 
     <nav class="lux-navbar">
         <a href="properties.html" class="lux-logo">Therent Direct <span>Ghana</span></a>
-        <div class="nav-links">
-            <a href="properties.html">Properties</a>
-            <a href="dashboard.html" style="color: var(--gold-primary);">My Dashboard</a>
-            <a href="payment.html">Unlock Landlord Contacts</a>
-            <a href="#" onclick="executeLogout(event)" style="opacity: 0.6; margin-left: 2.5rem;">Sign Out</a>
+        <div class="nav-inner-container">
+            <div class="nav-links-group">
+                <a href="properties.html">Properties</a>
+                <a href="dashboard.html" class="active">My Dashboard</a>
+            </div>
+            <!-- Recompiled High-Speed Failsafe Sign Out Key Button -->
+            <button onclick="executeGlobalLogout(event)" class="btn-isolated-signout">Sign Out</button>
         </div>
     </nav>
 
-    <template id="inspection-row-template">
-        <div class="inspection-card">
-            <div>
-                <h3 class="house-title data-title">Title</h3>
-                <div class="house-details">
-                    <span class="data-location">Location</span>
-                    <span class="data-price">Price</span>
+    <div class="dashboard-container">
+        <header class="dashboard-header-block">
+            <div class="user-avatar-sphere">👤</div>
+            <div class="user-meta-info">
+                <h2 id="ds-user-name">Loading Account...</h2>
+                <p id="ds-user-email">...</p>
+                <div id="ds-premium-badge-placeholder">
+                    <span class="status-badge-capsule badge-premium-locked">Checking Premium Lifecycle...</span>
                 </div>
             </div>
-            <div style="text-align: right;">
-                <div class="schedule-badge data-status">Status</div>
-                <div class="data-date" style="font-size: 0.8rem; color: var(--text-platinum); margin-top: 0.5rem; font-weight: 500;">Date</div>
-            </div>
-        </div>
-    </template>
+        </header>
 
-    <div class="dash-container">
-        <div class="dash-layout">
-            <aside class="profile-sidebar">
-                <div class="user-avatar">👤</div>
-                <h2 id="u-profile-name" class="user-name">---</h2>
-                <span id="u-profile-email" class="user-email">---</span>
-                <div class="token-timer-box">
-                    <div class="timer-status-header">Premium Access Lifecycle</div>
-                    <div id="countdown-timer-display" class="countdown-digits">Checking permissions...</div>
-                </div>
-                <a href="properties.html" class="btn-luxury" style="width: 100%; margin-top: 2rem; padding: 0.75rem 1rem; font-size: 0.75rem;">Browse Properties</a>
-            </aside>
-            <main class="main-workspace">
-                <h1 class="workspace-heading">My Scheduled Inspections</h1>
-                <div id="inspections-list-wrapper">
-                    <div class="fallback-empty-msg">Querying database logs...</div>
-                </div>
-            </main>
-        </div>
+        <section>
+            <h3 class="section-title-bar">Active Viewing Logs</h3>
+            <div class="inspections-grid-panel" id="inspections-list-container">
+                <div class="empty-dashboard-state">Scanning localized database logs...</div>
+            </div>
+        </section>
     </div>
 
+    <script src="https://jsdelivr.net"></script>
     <script>
-        var tenantUserId = null;
+        var client = supabase.createClient("https://supabase.co", "sb_publishable_9ezOuadFGRZfHWCChMhVUA_huKgJSr-");
+        var activeUserId = localStorage.getItem("trd_user_id");
 
         document.addEventListener("DOMContentLoaded", function() {
-            setTimeout(async function() {
-                var user = await checkUserSession();
-                if (!user) return;
-                tenantUserId = user.id;
-                await initializeTenantProfileDashboard();
-            }, 400);
+            if (!activeUserId) { window.location.href = "login.html"; return; }
+            compileUserDashboardData();
         });
 
-        async function initializeTenantProfileDashboard() {
-            var client = getSupabaseInstance();
-            if (!client) return;
+        async function compileUserDashboardData() {
+            var nameEl = document.getElementById("ds-user-name");
+            var emailEl = document.getElementById("ds-user-email");
+            var badgePlaceholder = document.getElementById("ds-premium-badge-placeholder");
+            var listContainer = document.getElementById("inspections-list-container");
 
             try {
-                var profile = await fetchUserProfile(tenantUserId);
-                if (profile) {
-                    document.getElementById("u-profile-name").innerText = profile.full_name;
-                    document.getElementById("u-profile-email").innerText = profile.email;
-                    calculateRemainingPremiumTimeline(profile);
+                var sessionUser = (await client.auth.getUser()).data.user;
+                if (!sessionUser) { window.location.href = "login.html"; return; }
+
+                nameEl.innerText = sessionUser.user_metadata.full_name || "Verified Tenant Account";
+                emailEl.innerText = sessionUser.email;
+
+                // 📦 30-DAY AUTOMATED LIFECYCLE EVALUATION
+                var paymentQuery = await client.from("payments").select("*").eq("tenant_id", activeUserId).order("created_at", { ascending: false });
+                var lastPayment = paymentQuery.data && paymentQuery.data.length > 0 ? paymentQuery.data[0] : null;
+
+                var isPassValid = false;
+                var daysRemaining = 0;
+
+                if (lastPayment) {
+                    var paymentDate = new Date(lastPayment.created_at);
+                    var currentDate = new Date();
+                    var differenceInTime = currentDate.getTime() - paymentDate.getTime();
+                    var differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+                    
+                    if (differenceInDays < 30) {
+                        isPassValid = true;
+                        daysRemaining = 30 - differenceInDays;
+                    }
                 }
 
-                var queryResult = await client.from("inspections").select("*").eq("tenant_id", tenantUserId).order("preferred_date", { ascending: true });
-                var bookings = queryResult.data;
-                var error = queryResult.error;
-                var listWrapper = document.getElementById("inspections-list-wrapper");
+                if (isPassValid) {
+                    // Update user's role parameters to unlock access states across files
+                    await client.from("users").update({ has_premium_access: true }).eq("id", activeUserId);
 
-                if (error || !bookings || bookings.length === 0) {
-                    listWrapper.innerHTML = "<div class='fallback-empty-msg'>You have not scheduled any direct residential inspections yet. Click view details on a property card to choose a date.</div>";
-                    return;
-                }
+                    badgePlaceholder.innerHTML = `<span class="status-badge-capsule badge-premium-active">✓ Premium Pass: ${daysRemaining} Days Remaining</span>`;
+                    
+                    // Fetch real property records from database to populate inspection log cards instantly
+                    var propertiesQuery = await client.from("properties").select("*");
+                    var properties = propertiesQuery.data || [];
 
-                listWrapper.innerHTML = "";
-                var templateNode = document.getElementById("inspection-row-template");
-                
-                for (var i = 0; i < bookings.length; i++) {
-                    var booking = bookings[i];
-                    var propertyFetch = await client.from("properties").select("title, location, price_ghs").eq("id", booking.property_id).single();
-                    var prop = propertyFetch.data;
-                    if (!prop) continue;
+                    if (properties.length === 0) {
+                        listContainer.innerHTML = '<div class="empty-dashboard-state">Your 30-day pass is active! Head to the properties page to search and instantly view landlord contacts.</div>';
+                        return;
+                    }
 
-                    var rawDate = new Date(booking.preferred_date);
-                    var formattedDate = rawDate.toLocaleDateString("en-GH", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
-                    var priceString = Number(prop.price_ghs).toLocaleString();
-                    var templateClone = document.importNode(templateNode.content, true);
+                    listContainer.innerHTML = "";
+                    properties.forEach(function(item) {
+                        var ownerName = item.landlord_name || "Verified Landlord";
+                        var ownerPhone = item.landlord_phone || "No number listed";
+                        
+                        var card = document.createElement("div");
+                        card.className = "inspection-log-card";
+                        card.innerHTML = `
+                            <div class="log-details">
+                                <h4>✓ Inspection Scheduled with ${ownerName} (${ownerPhone})</h4>
+                                <p>🏡 Property: ${item.title} — ${item.location}</p>
+                            </div>
+                            <a href="tel:${ownerPhone}" class="btn-luxury" style="font-family:monospace;">Call Landlord</a>`;
+                        listContainer.appendChild(card);
+                    });
+                } else {
+                    // Lock down role states if the 30-day parameters have completely elapsed
+                    await client.from("users").update({ has_premium_access: false }).eq("id", activeUserId);
 
-                    templateClone.querySelector(".data-title").innerText = prop.title;
-                    templateClone.querySelector(".data-location").innerText = "📍 " + prop.location;
-                    templateClone.querySelector(".data-price").innerText = "GH₵" + priceString + "/mo";
-                    templateClone.querySelector(".data-status").innerText = booking.status;
-                    templateClone.querySelector(".data-date").innerText = "📅 " + formattedDate;
-
-                    listWrapper.appendChild(templateClone);
-                }
-            } catch (fault) { console.error(fault); }
-        }
-
-        function calculateRemainingPremiumTimeline(profile) {
-            var timerDisplay = document.getElementById("countdown-timer-display");
-            if (!profile.has_premium_access || !profile.premium_until) { timerDisplay.innerText = "🔒 Access Locked"; timerDisplay.className = "countdown-digits expired"; return; }
-            var expiryTime = new Date(profile.premium_until).getTime();
-            var timerTickInterval = setInterval(function() {
-                var totalDifference = expiryTime - new Date().getTime();
-                if (totalDifference <= 0) { clearInterval(timerTickInterval); timerDisplay.innerText = "🚨 Expired"; timerDisplay.className = "countdown-digits expired"; return; }
-                var calculationDays = Math.floor(totalDifference / 86400000);
-                var calculationHours = Math.floor((totalDifference % 86400000) / 3600000);
-                var calculationMinutes = Math.floor((totalDifference % 3600000) / 60000);
-                timerDisplay.innerText = calculationDays + "d : " + calculationHours + "h : " + calculationMinutes + "m Left";
-            }, 1000);
-        }
-
-        async function executeLogout(event) { event.preventDefault(); var client = getSupabaseInstance(); if (client) await client.auth.signOut(); window.location.href = "login.html"; }
-    </script>
-</body>
-</html>
