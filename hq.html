@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Command HQ | Therent Direct Ghana</title>
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
+    <style>
+        :root { --bg: #0f172a; --surface: #1e293b; --gold: #d4af37; --text: #ffffff; --muted: #94a3b8; --border: rgba(212,175,55,0.15); --red: #ef4444; --green: #10b981; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); padding-bottom: 3rem; font-size: 13px; }
+        
+        .lux-navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: #090d16; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        .lux-logo { color: var(--text); font-weight: 700; text-decoration: none; font-size: 1.1rem; }
+        .lux-logo span { color: var(--gold); }
+        .btn-signout { background: rgba(239, 68, 68, 0.1); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.2); padding: 0.4rem 0.8rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; border-radius: 4px; cursor: pointer; }
+        
+        .tab-menu-strip { display: flex; background: #090d16; border-bottom: 1px solid var(--border); padding: 0.5rem; gap: 0.5rem; overflow-x: auto; }
+        .tab-btn { background: none; border: none; color: var(--muted); padding: 0.5rem 1rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 6px; white-space: nowrap; }
+        .tab-btn.active { background: var(--surface); color: var(--gold); border: 1px solid var(--border); }
+
+        .metrics-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; padding: 0.75rem; }
+        .metric-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem; text-align: center; }
+        .metric-title { font-size: 0.55rem; text-transform: uppercase; color: var(--muted); margin-bottom: 0.15rem; font-weight: 700; }
+        .metric-figure { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+        .metric-figure.gold { color: var(--gold); }
+        
+        .dashboard-content-area { padding: 0 1rem; max-width: 800px; margin: 0 auto; }
+        .panel-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .panel-heading { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; }
+        
+        .form-group { margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; }
+        .form-label { font-size: 0.75rem; text-transform: uppercase; color: var(--gold); font-weight: 700; letter-spacing: 0.03em; }
+        .luxury-input, .luxury-select, .luxury-textarea { width: 100%; background: #090d16; border: 1px solid var(--border); padding: 0.8rem 1rem; border-radius: 6px; color: var(--text); font-size: 0.95rem; outline: none; box-sizing: border-box; }
+        .luxury-textarea { height: 100px; resize: vertical; font-family: inherit; }
+        .luxury-input:focus, .luxury-select:focus, .luxury-textarea:focus { border-color: var(--gold); }
+        
+        /* Drag and Drop Zone Custom Luxury Theme Styles */
+        .media-dropzone { border: 2px dashed var(--gold); background: #090d16; border-radius: 8px; padding: 2rem; text-align: center; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+        .media-dropzone:hover { background: rgba(212,175,55,0.03); }
+        .dropzone-content p { color: var(--text); font-size: 0.9rem; margin-top: 0.5rem; }
+        .dropzone-content small { color: var(--muted); display: block; margin-top: 0.25rem; }
+        .browse-link { color: var(--gold); text-decoration: underline; font-weight: 600; }
+        .preview-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 0.5rem; margin-top: 1rem; }
+        .preview-item { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 4px; border: 1px solid var(--border); }
+
+        .btn-submit { background: var(--gold); color: #090d16; border: none; padding: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 6px; cursor: pointer; width: 100%; font-size: 0.95rem; margin-top: 1rem; display: block; text-align: center; }
+        .btn-submit:hover { background: #bfa032; }
+        .status-msg { font-size: 0.85rem; color: var(--gold); font-style: italic; margin-top: 0.75rem; text-align: center; display: none; padding: 0.5rem; border-radius: 4px; background: rgba(212,175,55,0.05); }
+        
+        .pipeline-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+        .pipeline-table th, .pipeline-table td { padding: 0.85rem 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: top; }
+        .pipeline-table th { text-transform: uppercase; font-size: 0.65rem; color: var(--muted); background: rgba(255,255,255,0.02); }
+        .badge-pill { padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
+        .badge-pill.active { background: rgba(16, 185, 129, 0.15); color: var(--green); }
+        .badge-pill.locked { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+        .action-flex { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+        .action-btn { background: var(--gold); color: #090d16; border: none; padding: 0.3rem 0.5rem; font-weight: 700; border-radius: 4px; cursor: pointer; font-size: 0.65rem; text-transform: uppercase; }
+        .btn-blue { background: #3b82f6; color: white; }
+        .btn-red { background: var(--red); color: white; }
+        
+        .dashboard-tab-panel { display: none; }
+        .dashboard-tab-panel.active-view { display: block; }
+    </style>
+</head>
+<body>
+
+    <nav class="lux-navbar">
+        <a href="properties.html" class="lux-logo">Therent Direct <span>HQ Command</span></a>
+        <button onclick="executeGlobalLogout(event)" class="btn-signout">Sign Out</button>
+    </nav>
+
+    <div class="tab-menu-strip">
+        <button class="tab-btn active" id="btn-tab1" onclick="switchDashboardViewTab('panel-ingestion', 'btn-tab1')">➕ Ingestion Form</button>
+        <button class="tab-btn" id="btn-tab2" onclick="switchDashboardViewTab('panel-properties', 'btn-tab2')">🏢 Properties</button>
+        <button class="tab-btn" id="btn-tab3" onclick="switchDashboardViewTab('panel-reviews', 'btn-tab3')">🗣️ Moderation</button>
+        <button class="tab-btn" id="btn-tab4" onclick="switchDashboardViewTab('panel-users', 'btn-tab4')">👥 User Logs</button>
+    </div>
+
+    <section class="metrics-bar">
+        <div class="metric-card"><div class="metric-title">Props</div><div id="m-props" class="metric-figure">0</div></div>
+        <div class="metric-card"><div class="metric-title">Avail</div><div id="m-avail" class="metric-figure">0</div></div>
+        <div class="metric-card"><div class="metric-title">Rent</div><div id="m-rented" class="metric-figure">0</div></div>
+        <div class="metric-card"><div class="metric-title">Users</div><div id="m-users" class="metric-figure">0</div></div>
+        <div class="metric-card"><div class="metric-title">Revenue</div><div id="m-revenue" class="metric-figure gold">₵0</div></div>
+        <div class="metric-card"><div class="metric-title">Tours</div><div id="m-inspect" class="metric-figure">0</div></div>
+        <div class="metric-card"><div class="metric-title">Review</div><div id="m-reviews" class="metric-figure">0</div></div>
+        <div class="metric-card"><div class="metric-title">Views</div><div class="metric-figure">184</div></div>
+    </section>
+
+    <div class="dashboard-content-area">
+        
+        <div class="dashboard-tab-panel active-view" id="panel-ingestion">
+            <main class="panel-box">
+                <h2 class="panel-heading" id="form-title">Upload Property Listing</h2>
+                <form id="admin-upload-form" onsubmit="executeAdminPropertyUpload(event)">
+                    <input type="hidden" id="ap-edit-id" value="">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Property Title Name</label>
+                        <input type="text" id="ap-title" class="luxury-input" placeholder="e.g. Executive 2-Bedroom Apartment" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">City / Region</label>
+                        <select id="ap-city" class="luxury-select" required>
+                            <option value="" disabled selected>Select Region</option>
+                            <option value="Greater Accra">Greater Accra</option>
+                            <option value="Ashanti">Ashanti</option>
+                            <option value="Eastern">Eastern</option>
+                            <option value="Western">Western</option>
+                            <option value="Central">Central</option>
+                            <option value="Volta">Volta</option>
+                            <option value="Northern">Northern</option>
+                            <option value="Upper East">Upper East</option>
+                            <option value="Upper West">Upper West</option>
+                            <option value="Bono">Bono</option>
+                            <option value="Bono East">Bono East</option>
+                            <option value="Ahafo">Ahafo</option>
+                            <option value="Savannah">Savannah</option>
+                            <option value="North East">North East</option>

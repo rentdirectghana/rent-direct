@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure HQ Login | Therent Direct Ghana</title>
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0f172a; color: #ffffff; margin: 0; padding: 0; }
+        .auth-viewport { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); }
+        .premium-auth-card { background: rgba(18, 25, 38, 0.85); border: 1px solid rgba(212,175,55,0.2); border-radius: 16px; width: 100%; max-width: 420px; padding: 3rem 2.5rem; backdrop-filter: blur(12px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); box-sizing: border-box; }
+        .auth-editorial-header { text-align: center; margin-bottom: 2.5rem; }
+        .auth-editorial-header h1 { font-size: 1.8rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem; }
+        .auth-editorial-header p { color: #d4af37; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+        .form-field-group { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.4rem; }
+        .luxury-field-label { font-size: 0.7rem; text-transform: uppercase; color: #94a3b8; font-weight: 600; letter-spacing: 0.05em; }
+        .luxury-input-field { width: 100%; background: #090d16; border: 1px solid rgba(212, 175, 55, 0.15); padding: 1rem 1.1rem; border-radius: 8px; color: #ffffff; font-size: 0.95rem; outline: none; box-sizing: border-box; transition: border-color 0.2s ease; }
+        .luxury-input-field:focus { border-color: #d4af37; }
+        
+        /* Fixed Password Input Layout */
+        .password-wrapper { position: relative; display: flex; align-items: center; width: 100%; }
+        .password-wrapper .luxury-input-field { padding-right: 3.5rem; }
+        .btn-toggle-eye { position: absolute; right: 1rem; background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 1.2rem; outline: none; z-index: 10; padding: 0.5rem; }
+        
+        .btn-luxury { background: #d4af37; color: #090d16; border: none; padding: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 6px; cursor: pointer; width: 100%; box-sizing: border-box; font-size: 0.9rem; transition: background 0.2s ease; margin-top: 0.5rem; }
+        .btn-luxury:hover { background: #bfa032; }
+        .action-feedback-box { margin-top: 1.5rem; font-size: 0.85rem; text-align: center; padding: 0.85rem; border-radius: 6px; display: none; }
+    </style>
+</head>
+<body>
+    <div class="auth-viewport">
+        <div class="premium-auth-card">
+            <header class="auth-editorial-header">
+                <h1>Command HQ</h1>
+                <p>Executive Administration Access</p>
+            </header>
+            <form id="admin-login-form" onsubmit="executeAdminLogin(event)">
+                <div class="form-field-group">
+                    <label class="luxury-field-label">Administrator Email</label>
+                    <input type="email" id="admin-email" class="luxury-input-field" placeholder="rentdirecta6@gmail.com" required>
+                </div>
+                <div class="form-field-group">
+                    <label class="luxury-field-label">Security Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="admin-password" class="luxury-input-field" placeholder="••••••••" required>
+                        <!-- 👁️ Bulletproof click connection -->
+                        <button type="button" class="btn-toggle-eye" onclick="togglePasswordVisibilityView(this)">👁️</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn-luxury">Authenticate Pass</button>
+                <div id="form-feedback" class="action-feedback-box"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://jsdelivr.net"></script>
+    <script>
+        var client = supabase.createClient("https://supabase.co", "sb_publishable_9ezOuadFGRZfHWCChMhVUA_huKgJSr-");
+
+        // 👁️ FIX: Harmonized function mapping to unfreeze click blocks
+        function togglePasswordVisibilityView(btnElement) {
+            var passInput = document.getElementById("admin-password");
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                btnElement.innerText = "🙈";
+            } else {
+                passInput.type = "password";
+                btnElement.innerText = "👁️";
+            }
+        }
+
+        async function executeAdminLogin(event) {
+            event.preventDefault();
+            var msg = document.getElementById("form-feedback");
+            var email = document.getElementById("admin-email").value.trim();
+            var password = document.getElementById("admin-password").value;
+
+            msg.style.display = "block"; 
+            msg.style.background = "rgba(212, 175, 55, 0.1)"; 
+            msg.style.color = "#d4af37";
+            msg.innerText = "Verifying executive dashboard credentials...";
+
+            if (email.toLowerCase() !== "rentdirecta6@gmail.com") {
+                msg.style.background = "rgba(239, 68, 68, 0.1)"; 
+                msg.style.color = "#ef4444";
+                msg.innerText = "Access Denied: Invalid Administrative Profile Account.";
+                return;
+            }
+
+            try {
+                var authResult = await client.auth.signInWithPassword({ email: email, password: password });
+                if (authResult.error) throw authResult.error;
+
+                if (authResult.data && authResult.data.user) {
+                    localStorage.setItem("trd_user_id", authResult.data.user.id);
+                    msg.style.background = "rgba(16, 185, 129, 0.1)"; 
+                    msg.style.color = "#10b981";
+                    msg.innerText = "✓ Success! Opening secure command modules...";
+                    
+                    setTimeout(function() {
+                        window.location.href = "admin.html";
+                    }, 800);
+                }
+            } catch (err) { 
+                msg.style.background = "rgba(239, 68, 68, 0.1)"; 
+                msg.style.color = "#ef4444";
+                msg.innerText = err.message;
+            }
+        }
+    </script>
+</body>
+</html>
+
